@@ -1,20 +1,4 @@
-:root {
-  --max-width: 1100px;
-  --border-radius: 5px;
-  --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
-    'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
-    'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
-  --background-color:#1c1b22;
-  --foreground-color: white;
-
-  --surface-dark-color:#121216;
-  
-  --accent-color:#c066e8;
-  --accent-color-dark:#5c316f;
-
-
-
-}
+@import "./variables.scss";
 
 * {
   box-sizing: border-box;
@@ -30,7 +14,7 @@ body {
 }
 
 body {
-  color: var(--foreground-color);
+  color: var(----background-font-color);
 }
 
 html {
@@ -40,7 +24,6 @@ html {
 
 main{
   height: 100%;
-  max-width: var(--max-width);
 }
 
 a {

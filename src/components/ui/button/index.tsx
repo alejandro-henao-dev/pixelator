@@ -3,20 +3,22 @@ import React from "react";
 import styles from "./index.module.scss"
 
 
-enum ButtonTypes{
-  primary,
-  secondary
+export enum BUTTON_TYPES{
+  primary="primary",
+  secondary = 'secondary',
+  tertiary='tertiary'
 }
+
 interface Props extends React.PropsWithChildren{
   label?: string,
-  type?: ButtonTypes,
+  type?: BUTTON_TYPES,
   onClick?: (e: any) => void,
   disabled?:boolean
   
 }
 export const Button: React.FC<Props> = ({
   children,
-  type = ButtonTypes.primary,
+  type = BUTTON_TYPES.primary,
   onClick = () => { },
   disabled=false
 }) => {
@@ -24,7 +26,7 @@ export const Button: React.FC<Props> = ({
   return <button
     className={classnames([
       styles.button,
-      styles.primary
+      styles[type]
     ])}
     onClick={onClick}
     disabled={disabled}

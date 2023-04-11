@@ -2,18 +2,18 @@ import { classnames } from "@/utils/classnames";
 import React, { DetailedHTMLProps, HTMLAttributes } from "react";
 import styles from "./index.module.scss"
 
-enum TitleTypes{
+export enum TITLE_TYPES{
   main,
   subtitle,
   caption
 }
 
 interface Props extends React.PropsWithChildren,DetailedHTMLProps<HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement>{
-  type?: TitleTypes,
+  type?: TITLE_TYPES,
   align:  'start' | 'end' | 'left' | 'right' | 'center' | 'justify'
 }
 export const Title: React.FC<Props> = ({
-  type=TitleTypes.main,
+  type=TITLE_TYPES.main,
   align = "start",
   children,
 }) => {
