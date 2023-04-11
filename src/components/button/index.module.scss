@@ -1,0 +1,35 @@
+.button{
+  padding: .5rem 1rem;
+  border-radius: var(--border-radius);
+  background: transparent;
+  color:currentColor;
+  cursor: pointer;
+  border-color:solid 1px#535353;
+
+  &:disabled{
+    opacity: .3;
+    pointer-events: none;
+    cursor: default;
+  }
+}
+
+
+.primary{
+  border:solid 1px#535353;
+  // border:none;
+  // background: linear-gradient(to right, #1c1b22, #2f2e37);
+  background: linear-gradient(80deg, #121216, #1c1b22); 
+  // background: radial-gradient(at center, #121216, #1c1b22); 
+  &:active{
+    border-color:var(--accent-color-dark);;
+   background: #121216;
+  }
+}
+
+.secondary{
+  border:none;
+  text-decoration: underline;
+  &:active{
+    color:var(--accent-color);;
+  }
+}
