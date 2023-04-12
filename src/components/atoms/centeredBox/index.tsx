@@ -1,9 +1,10 @@
+import { classnames } from "@/utils/classnames"
 import {PropsWithChildren,FC} from "react"
 import styles from "./index.module.scss"
 
 
 interface Props extends PropsWithChildren{
-  
+ className?:string 
 }
 
 /**
@@ -11,10 +12,11 @@ interface Props extends PropsWithChildren{
  * it's children content, occuping all width and height of it's parent
  */
 export const CenteredBox: FC<Props> = ({
-  children
+  children,
+  className
 }) => {
   
-  return <div className={styles.centeredBox}>
+  return <div className={classnames(styles.centeredBox, className)}>
     <div>
       {children}
     </div>

@@ -1,5 +1,3 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
 import Head from "next/head"
 import { Title, TITLE_TYPES } from '@/components/atoms/title'
 // import { CenteredBox } from '@/componesnts/atoms/centeredBox'
@@ -7,8 +5,9 @@ import { Button, BUTTON_TYPES } from '@/components/atoms/button'
 import styles from "./index.module.scss"
 import { SITE_DATA } from '@/constants/siteData'
 import { FileInput } from '@/components/atoms/fileInput'
-
-const inter = Inter({ subsets: ['latin'] })
+import Link from "next/link"
+import { ImageFileInput } from "@/components/molecules/imageFileInput"
+import { ImageFileInputButton } from "@/components/molecules/imageFileInputButton"
 
 export default function Home() {
   return (
@@ -26,18 +25,12 @@ export default function Home() {
         </header>
 
         <section className={styles.actions}>
-          <Button type={BUTTON_TYPES.secondary}>
-            New Project
-          </Button>
-          <FileInput
-            Container={({ children }) =>
-              <Button type={BUTTON_TYPES.secondary} >
-                {children}
-              </Button>
-            }
-          >
-              Open Project
-          </FileInput>
+          <Link href="/new">
+            <Button type={BUTTON_TYPES.secondary}>
+              New Project
+            </Button>
+          </Link>
+          <ImageFileInputButton>Open Project</ImageFileInputButton>
           
         </section>
 

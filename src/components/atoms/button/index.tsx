@@ -9,14 +9,14 @@ export enum BUTTON_TYPES{
   tertiary='tertiary'
 }
 
-interface Props extends React.PropsWithChildren{
+export interface ButtonProps extends React.PropsWithChildren{
   label?: string,
   type?: BUTTON_TYPES,
   onClick?: (e: any) => void,
   disabled?:boolean
   
 }
-export const Button: React.FC<Props> = ({
+export const Button: React.FC<ButtonProps> = ({
   children,
   type = BUTTON_TYPES.primary,
   onClick = () => { },
@@ -24,10 +24,10 @@ export const Button: React.FC<Props> = ({
 }) => {
   
   return <button
-    className={classnames([
+    className={classnames(
       styles.button,
       styles[type]
-    ])}
+    )}
     onClick={onClick}
     disabled={disabled}
   >

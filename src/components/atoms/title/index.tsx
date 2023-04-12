@@ -36,10 +36,10 @@ export const Title: React.FC<Props> = ({
     props.as ?? titleComponentTypes[type],
     {
       style:variables,
-      className:classnames([
+      className:classnames(
         styles.title,
         styles[type]
-      ])
+      )
     },
     children
 
