@@ -1,5 +1,5 @@
 import { classnames } from "@/utils/classnames";
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren, useCallback, useEffect, useRef } from "react";
 import styles from './index.module.scss'
 
 
@@ -11,21 +11,33 @@ export enum INPUT_VARIANT{
 
 export interface InputProps extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, PropsWithChildren{
   className?: string,
-  variant?:INPUT_VARIANT
+  variant?: INPUT_VARIANT,
+  
 }
 
 
 export const Input: React.FC<InputProps> = ({
-  onChange,
   className,
-  variant=INPUT_VARIANT.primary,
+  variant = INPUT_VARIANT.primary,
+  autoFocus,
   ...props
 }) => {
 
-  
+  const inputRef:React.LegacyRef<HTMLInputElement> = useRef(null);
+
+  useEffect(() => {
+    if (inputRef.current && autoFocus) {
+      inputRef.current.focus();
+      inputRef.current.selectionStart = inputRef.current.value.length;
+      inputRef.current.selectionEnd = inputRef.current.value.length;
+    }
+  }, [autoFocus, inputRef]);
+
+
 
   return <input
-    className={classnames(className,styles.inputBase, styles[variant])}
+    className={classnames(className, styles.inputBase, styles[variant])}
+    ref={inputRef}
     {...props}
   />
   

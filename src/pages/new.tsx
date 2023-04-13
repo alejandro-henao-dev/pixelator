@@ -56,7 +56,8 @@ export default function NewProject() {
         <Field
           label="Project Title"
           placeholder="Project Title" value={title} 
-          onInput={(e:any)=>dispatch(projectStateActions.setTitle(e.target.value))}
+          onInput={(e: any) => dispatch(projectStateActions.setTitle(e.target.value))}
+          autoFocus
         />
       </header>
       
