@@ -1,0 +1,28 @@
+.inputBase{
+  all:unset;
+  display: block;
+  width: 100%;
+  padding: .5em;
+  box-sizing: border-box;
+}
+
+.filled{
+  background-color: var(--background-color-light);
+  border-radius: var(--border-radius);
+
+  &:focus, &:hover{
+    border-bottom: solid 1px var(--accent-color);
+  }
+}
+
+.simple{
+  border: solid 1px var(--accent-color-dark);
+  padding-bottom:.2em;
+  border: solid 1px var(--accent-color-dark);
+  border-top:none;
+  border-left:none;
+  border-right:none;
+  &:focus, &:hover{
+    border-color: var(--accent-color);
+  }
+}

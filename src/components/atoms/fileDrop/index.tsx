@@ -4,9 +4,10 @@ import styles from './index.module.scss'
 
 export interface FileDropProps extends PropsWithChildren{
   accept?: string,
-  onChange?:()=>void,
+  onChange?:(files:File[],event:any) => void,
   onDragOver?:()=>void,
-  onDrop?:()=>void
+  onDrop?: () => void,
+  keepBorders?:boolean
 }
 export const FileDrop: React.FC<any> = ({
   accept,
@@ -14,15 +15,16 @@ export const FileDrop: React.FC<any> = ({
   onChange=()=>{},
   children,
   onDragOver=()=>{},
-  onDrop=()=>{}
+  onDrop = () => { },
+  keepBorders
 }) => {
 
-  const [dropping, setDropping] = useState(false)
+  const [dropping, setDropping] = useState(keepBorders)
   
   const onDropHandler = (e: any) => {
     
     e.preventDefault();
-    setDropping(false)
+    !keepBorders && setDropping(false)
     if (accept) {
       const valid = accept.split(",").some((type:string) => {
         return Array.from(e.dataTransfer.items).every((i: any) => {
@@ -36,25 +38,24 @@ export const FileDrop: React.FC<any> = ({
     }
     
     onDrop()
-    const files=e.dataTransfer.files
-    const file = files[0]
-    onChange(file,files)
+    const files=e.dataTransfer.files as File[]
+    onChange(files,e)
   }
 
   return <div
     onDragOver={e => {
       e.preventDefault()
       onDragOver(e)
-      setDropping(true)
+      !keepBorders && setDropping(true)
     }}
     onMouseLeave={() => {
       if(dropping){
-        setDropping(false)
+        !keepBorders && setDropping(false)
       }
     }}
     onMouseUp={() => {
       if(dropping){
-        setDropping(false)
+        !keepBorders && setDropping(false)
       }
     }}
     onDrop={onDropHandler}

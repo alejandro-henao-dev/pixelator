@@ -7,7 +7,7 @@ import { ImageFileInput } from "../imageFileInput"
 export interface ImageFileInputButtonProps extends PropsWithChildren{
   buttonProps?: ButtonProps,
   inputProps?: DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
-  onChange?: (files?: File,value?:string) => void,
+  onChange?: (files?: File[],value?:string) => void,
 }
 
 export const ImageFileInputButton: React.FC<ImageFileInputButtonProps> = ({

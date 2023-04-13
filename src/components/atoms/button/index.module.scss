@@ -4,7 +4,7 @@
   background: transparent;
   color:currentColor;
   cursor: pointer;
-  
+  display: inline-block;
 
   &:disabled{
     opacity: .3;
@@ -13,9 +13,13 @@
   }
 }
 
+.block{
+  display: block;
+  width: 100%;
+}
 .secondary{
   border:solid 1px#535353;
-  background: linear-gradient(80deg, var(--background-color-dark), var(--background-color)); 
+  background:var(--background-color); 
   &:active{
     border-color:var(--accent-color-dark);;
    background: #121216;
@@ -24,8 +28,13 @@
 
 .primary{
  @extend .secondary;
- font-weight: 700;
- color:var(--accent-color);
+ font-weight: 600;
+ background: var(--accent-color-dark);
+ border:none;
+  &:active{
+    background: var(--accent-color-dark);
+    color: var(--background-color-dark);
+  }
 }
 
 

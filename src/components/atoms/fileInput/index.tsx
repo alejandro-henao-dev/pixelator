@@ -2,7 +2,7 @@ import React, { DetailedHTMLProps, HTMLAttributes, LegacyRef, useRef } from "rea
 
 
 export interface FileInputProps{
-  onChange?: (files?: File, value?: string) => void,
+  onChange?: (files:File[],event:any) => void,
   onDragOver?: (e: any) => void,
   onDrop?: (e:any) => void,
   Container?:React.FC<React.PropsWithChildren>,
@@ -26,48 +26,13 @@ export const FileInput: React.FC<FileInputProps> = ({
   
 
   const onChangeHandler = (e: any) => { 
-    console.log("cjange")
-    const files = e.target.files[0]
-    const value=e.target.value
-    onChange(files, value)
+    onChange( e.target.files, e)
   }
 
-  const onDropHandler = (e: any) => {
-    
-    e.preventDefault();
-    const accepted = inputProps?.accept?.split(',') || []
-    
-    const accept = accepted.some(accept => {
-      return Array.from(e.dataTransfer.items).every((i: any) => {
-        return i.type.match(new RegExp(accept))
-      })
-    })
-    
-    if (!accept) {
-      return
-    }
 
-    const files=e.dataTransfer.files
-    const file = files[0]
-    ref.current.files = files
-    
-    
-    onDrop(e)
-    
-    
-    const value=e.target.value
-    onChange(file, value)
-  }
 
   return <Container>
-    <div onClick={() => ref?.current?.click()}
-      onDragOver={e => {
-        e.preventDefault()
-        onDragOver(e)
-        
-      }}
-      onDrop={onDropHandler}
-    >
+    <div onClick={() => ref?.current?.click()}>
       <input hidden type='file' ref={ref} onInput={onChangeHandler} {...inputProps} />
         {children}
     </div>

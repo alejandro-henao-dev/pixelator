@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import ImageReducer from './slices/imageSlice'
+import projectReducer from './slices/projectSlice'
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
-    image: ImageReducer
+    image: ImageReducer,
+    project: projectReducer
   },
 })
 

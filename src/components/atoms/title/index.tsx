@@ -12,7 +12,7 @@ export enum TITLE_TYPES{
 interface Props extends React.PropsWithChildren, DetailedHTMLProps<HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement>{
   as?:string,
   type?: TITLE_TYPES,
-  align?:  'start' | 'end' | 'left' | 'right' | 'center' | 'justify'
+  align?:  'inherit' | 'start' | 'end' | 'left' | 'right' | 'center' | 'justify'
 }
 
 
@@ -23,13 +23,13 @@ const titleComponentTypes:any = {
 }
 export const Title: React.FC<Props> = ({
   type=TITLE_TYPES.main,
-  align = "start",
+  align = 'inherit',
   children,
   ...props
 }) => {
 
   const variables:any = {
-    '--align':align,
+    '--align':align
   }
 
   return React.createElement(

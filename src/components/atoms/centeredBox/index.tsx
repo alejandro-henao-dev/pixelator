@@ -17,9 +17,7 @@ export const CenteredBox: FC<Props> = ({
 }) => {
   
   return <div className={classnames(styles.centeredBox, className)}>
-    <div>
       {children}
-    </div>
   </div>
   
 }
