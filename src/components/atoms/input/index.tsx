@@ -12,6 +12,7 @@ export enum INPUT_VARIANT{
 export interface InputProps extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, PropsWithChildren{
   className?: string,
   variant?: INPUT_VARIANT,
+  overwrite?:boolean
   
 }
 
@@ -20,6 +21,7 @@ export const Input: React.FC<InputProps> = ({
   className,
   variant = INPUT_VARIANT.primary,
   autoFocus,
+  overwrite,
   ...props
 }) => {
 
@@ -28,10 +30,12 @@ export const Input: React.FC<InputProps> = ({
   useEffect(() => {
     if (inputRef.current && autoFocus) {
       inputRef.current.focus();
-      inputRef.current.selectionStart = inputRef.current.value.length;
+      inputRef.current.selectionStart = overwrite
+        ? 0
+        :inputRef.current.value.length;
       inputRef.current.selectionEnd = inputRef.current.value.length;
     }
-  }, [autoFocus, inputRef]);
+  }, [overwrite,autoFocus, inputRef]);
 
 
 

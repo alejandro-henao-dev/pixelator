@@ -58,6 +58,7 @@ export default function NewProject() {
           placeholder="Project Title" value={title} 
           onInput={(e: any) => dispatch(projectStateActions.setTitle(e.target.value))}
           autoFocus
+          overwrite
         />
       </header>
       
