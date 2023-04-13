@@ -33,7 +33,24 @@ export default function NewProject() {
   const disabledContiue=(!title || !image) 
 
   return <section className={classnames(styles.container)} >
-      <CenteredBox>
+    <CenteredBox
+      onDragStart={e => {
+        e.preventDefault()
+        return false
+      }}
+      onDragEnd={e => {
+        e.preventDefault()
+        return false
+      }}
+      onDragOver={e => {
+        e.preventDefault()
+        return false
+      }}
+      onDrop={e => {
+        e.preventDefault()
+        return false
+      }}
+    >
         
       <header className={classnames(styles.titleInput)} >
         <Field

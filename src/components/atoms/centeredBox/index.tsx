@@ -3,7 +3,7 @@ import {PropsWithChildren,FC} from "react"
 import styles from "./index.module.scss"
 
 
-interface Props extends PropsWithChildren{
+interface Props extends PropsWithChildren,  React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLDivElement>, HTMLDivElement>{
  className?:string 
 }
 
@@ -13,10 +13,11 @@ interface Props extends PropsWithChildren{
  */
 export const CenteredBox: FC<Props> = ({
   children,
-  className
+  className,
+  ...props
 }) => {
   
-  return <div className={classnames(styles.centeredBox, className)}>
+  return <div className={classnames(styles.centeredBox, className)} {...props}>
       {children}
   </div>
   
