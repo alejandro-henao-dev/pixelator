@@ -1,0 +1,44 @@
+.container{
+  height:1em;
+  width: 2em;
+  background-color: var(--background-color-light);
+  border:1px solid var( --background-font-color);
+  border-radius: 2em;
+  padding:  .1em;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+
+  
+  &.disabled{
+    opacity: .3;
+    pointer-events: none;
+    border-color: var( --background-font-color);
+    .handle{
+      background-color: var( --background-font-color);
+    }
+  }
+
+  &:focus, &:hover, &:active{
+    border-color: var(--accent-color);
+  }
+  &.on{
+    border-color: var(--accent-color);
+    justify-content: flex-end;
+    .handle{
+      background-color: var(--accent-color);
+    }
+  }
+
+}
+
+
+.handle{
+  border-radius: 100%;
+  background-color: var( --background-font-color);
+  height: .7em;
+  aspect-ratio: 1/1;
+  line-height: 1em;
+  margin-top: .05em;
+}

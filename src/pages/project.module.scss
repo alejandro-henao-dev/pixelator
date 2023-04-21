@@ -1,0 +1,42 @@
+
+.pageContainer{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: max-content 1fr;
+  gap:2rem;
+  padding:0 1rem;
+  min-height: calc(100vh - 4rem);
+}
+.header{
+  display: flex;
+  gap:1rem;
+  align-items: flex-end;
+  input{
+    font-size: 2rem;
+  }
+}
+
+
+.toolbar{
+  display: flex;
+  margin-bottom: 10px;
+  align-items: center;
+  gap:10px;
+
+}
+
+
+
+.workspace{
+  display: grid;
+  grid-template-columns: 1fr 200px; 
+  height: 100%;
+  gap:1rem;
+  
+}
+
+.sidebar{
+  display: flex;
+  flex-direction: column;
+  // gap:5px;
+}

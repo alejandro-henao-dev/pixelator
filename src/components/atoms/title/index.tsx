@@ -24,6 +24,7 @@ const titleComponentTypes:any = {
 export const Title: React.FC<Props> = ({
   type=TITLE_TYPES.main,
   align = 'inherit',
+  className,
   children,
   ...props
 }) => {
@@ -38,8 +39,11 @@ export const Title: React.FC<Props> = ({
       style:variables,
       className:classnames(
         styles.title,
-        styles[type]
-      )
+        styles[type],
+        className
+        
+      ),
+      ...props
     },
     children
 

@@ -1,0 +1,45 @@
+
+
+.toolbox{
+  hr{
+    margin: 10px 0;
+    background-color:  var(--background-color-light);
+    height: 2px;
+    border: none;
+  }
+
+  &.disabled{
+    opacity: .3;
+    pointer-events: none;
+  }
+}
+
+.title{
+  user-select: none;
+}
+.header{
+  display: flex;
+  align-items: center;
+  gap:10px;
+  background-color: var(--background-color-light);
+  padding:10px;
+  font-size: .9rem;
+  &.switchOnHeader{
+    .dropDownIcon{
+      margin-left:unset;
+      margin-right:auto;
+    }
+  }
+}
+.body{
+  transform: scaleY(1);
+  transform-origin: 50% 0;
+  border:1px solid var(--background-color-light);
+  padding:10px;
+  font-size: .8rem;
+}
+
+.dropDownIcon{
+  margin-left:auto;
+  
+}
