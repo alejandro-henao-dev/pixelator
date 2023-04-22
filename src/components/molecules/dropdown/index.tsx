@@ -2,28 +2,28 @@
 import { ToggleSwitch } from "@/components/atoms/toggleSwitch"
 import { classnames } from "@/utils/classnames"
 import { CaretDownFilled, CaretUpFilled } from "@ant-design/icons"
-import { PropsWithChildren, useEffect, useState } from "react"
+import { PropsWithChildren, ReactComponentElement, ReactElement, useEffect, useState } from "react"
 import { Title, TITLE_TYPES } from "../../atoms/title"
 import styles from "./index.module.scss"
 
 
-export interface ConfigBoxProps extends PropsWithChildren{
+export interface DropdownProps extends PropsWithChildren{
   label: string,
   initCollapsedState?: boolean,
   collapsed?:boolean,
   disabled?: boolean,
-  switchOnHeader?: boolean,
+  HeaderRender?:any,
   onChange?:(state:boolean)=>void
 }
 
-export const ConfigBox: React.FC<ConfigBoxProps> = ({
+export const Dropdown: React.FC<DropdownProps> = ({
   initCollapsedState=false,
   label,
   disabled,
-  switchOnHeader,
   collapsed: controlledCollapseValue,
   onChange,
   children,
+  HeaderRender,
 }) => {
 
 
@@ -54,15 +54,18 @@ export const ConfigBox: React.FC<ConfigBoxProps> = ({
       disabled && styles.disabled
     )}
   >
-    <header className={classnames(styles.header,  switchOnHeader && styles.switchOnHeader )}
+    <header className={classnames(styles.header)}
       onClick={toggle}
     >
-      <Title type={TITLE_TYPES.caption} className={styles.title}>{label}</Title>
-      <span className={classnames(styles.dropDownIcon)}>
-        {collapsed && <CaretDownFilled />}
-        {!collapsed && <CaretUpFilled />}
-      </span>
-      {switchOnHeader && <ToggleSwitch />}
+      {!HeaderRender && <>
+        <Title type={TITLE_TYPES.caption} className={styles.title}>{label}</Title>
+        <span className={classnames(styles.dropDownIcon)}>
+          {collapsed && <CaretDownFilled />}
+          {!collapsed && <CaretUpFilled />}
+        </span>
+      </>}
+
+      {HeaderRender && <HeaderRender collapsed={collapsed} toggleCollapsed={ toggle} />}
     </header>
     
     {!collapsed && <section className={styles.body}>

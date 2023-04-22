@@ -1,6 +1,6 @@
 
 import { BUTTON_TYPES } from "@/components/atoms/button";
-import { ConfigBox } from "@/components/molecules/configBox";
+import { Dropdown } from "@/components/molecules/dropdown";
 import { Input, INPUT_VARIANT } from "@/components/atoms/input";
 import { Title, TITLE_TYPES } from "@/components/atoms/title";
 import { ProjectImageInput } from "@/components/organisms/projectImageInput.tsx";
@@ -25,9 +25,9 @@ export default function ProjectView() {
         </section>
         <aside className={styles.sidebar}>
 
-          <ConfigBox label="View Mode" />
-          <ConfigBox label="Pixelator" />
-          <ConfigBox label="download"/>
+          <Dropdown label="View Mode" />
+          <Dropdown label="Pixelator" />
+          <Dropdown label="download"/>
 
         </aside>
       </div>
