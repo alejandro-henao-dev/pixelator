@@ -1,24 +1,42 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '@/store'
+import { Pixel } from '@/models/Pixel'
 
-// Define a type for the slice state
 interface PixelatorState {
   
+  config: {
+    pixelSize: number,
+  },
+  active:boolean,
+  pixels?: Pixel[]
 }
 
 // Define the initial state using that type
 const initialState: PixelatorState = {
-  
+  config: {
+    pixelSize: 10,  
+  },
+  active:false,
+  pixels: undefined,
 }
 
 export const PixelatorSlice = createSlice({
   name: 'pixelator',
   initialState,
   reducers: {
-    
+    setActive: (state, action: PayloadAction<boolean>) => {
+      state.active=action.payload
+    },
+    setPixelSize: (state, action: PayloadAction<number>) => {
+      state.config.pixelSize=action.payload
+    },
+
+    setPixels: (state, action: PayloadAction<Pixel[]>) => {
+      state.pixels=action.payload
+    }
   },
 })
 
-export const imageStateActions = PixelatorSlice.actions
+export const pixelatorStateActions = PixelatorSlice.actions
 
 export default PixelatorSlice.reducer

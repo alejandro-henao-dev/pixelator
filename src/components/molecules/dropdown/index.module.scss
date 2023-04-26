@@ -24,6 +24,7 @@
   background-color: var(--background-color-light);
   padding:10px;
   font-size: .9rem;
+  cursor: pointer;
   &.switchOnHeader{
     .dropDownIcon{
       margin-left:unset;

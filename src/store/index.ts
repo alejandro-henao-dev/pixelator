@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import ImageReducer from './slices/imageSlice'
 import projectReducer from './slices/projectSlice'
+import pixelatorReducer from './slices/pixelatorSlice'
 
 export const store = configureStore({
   reducer: {
     image: ImageReducer,
-    project: projectReducer
+    project: projectReducer,
+    pixelatorMode: pixelatorReducer
   },
 })
 

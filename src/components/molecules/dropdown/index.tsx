@@ -26,7 +26,6 @@ export const Dropdown: React.FC<DropdownProps> = ({
   HeaderRender,
 }) => {
 
-
   const [collapsed, setCollapsed] = useState(controlledCollapseValue ?? initCollapsedState)
 
 

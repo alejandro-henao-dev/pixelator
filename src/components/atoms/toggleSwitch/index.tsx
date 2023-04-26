@@ -31,8 +31,7 @@ export const ToggleSwitch:React.FC<ToggleSwitchProps>= ({
     e.preventDefault()
     e.stopPropagation()
     if (value !== null && value !== undefined) { 
-      console.log(value,"--")
-      onChange && onChange(openState)
+      onChange && onChange(!openState)
       return
     }
     setOpenState(prev=>!prev)

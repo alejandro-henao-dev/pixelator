@@ -14,7 +14,8 @@ export interface ButtonProps extends React.PropsWithChildren{
   type?: BUTTON_TYPES,
   onClick?: (e: any) => void,
   disabled?: boolean,
-  block?:boolean
+  block?: boolean,
+  className?:string
   
 }
 export const Button: React.FC<ButtonProps> = ({
@@ -22,14 +23,16 @@ export const Button: React.FC<ButtonProps> = ({
   type = BUTTON_TYPES.primary,
   onClick = () => { },
   disabled = false,
-  block=false
+  block = false,
+  className
 }) => {
   
   return <button
     className={classnames(
       styles.button,
       styles[type],
-      block && styles.block
+      block && styles.block,
+      className,
     )}
     onClick={onClick}
     disabled={disabled}

@@ -1,0 +1,44 @@
+
+
+.container{
+  display: flex;
+  flex-direction: column;
+  gap:10px;
+  & > section, & > header, & > div{
+    padding-bottom: 10px;
+    &:not(:last-child){
+      border-bottom:solid 1px var(--background-color-light);
+    }
+  }
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.sectionTitle{
+  font-weight: 400;
+}
+
+.generateButton{
+  margin-top:20px
+}
+
+.field{
+  display: flex;
+  gap:1em;
+  align-items: center;
+
+  input{
+    max-width: max-content;
+  }
+
+  label{
+    display: block;
+    width: 100%;
+  }
+
+  
+}

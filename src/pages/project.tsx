@@ -2,20 +2,15 @@
 import { BUTTON_TYPES } from "@/components/atoms/button";
 import { Dropdown } from "@/components/molecules/dropdown";
 import { Input, INPUT_VARIANT } from "@/components/atoms/input";
-import { Title, TITLE_TYPES } from "@/components/atoms/title";
-import { ProjectImageInput } from "@/components/organisms/projectImageInput.tsx";
-import { ProjectTitleInput } from "@/components/organisms/projectTitleInput.tsx";
-import { SaveProjectButton } from "@/components/organisms/saveProject/saveProjectButton";
+import { ProjectImageInput } from "@/components/organisms/projectImageInput";
+import { ProjectTitleInput } from "@/components/organisms/projectTitleInput";
 import styles from "./project.module.scss"
+import { PixelatorConfigDropdown } from "@/components/organisms/pixelatorConfigDropdown";
+import { ProjectConfigDropdown } from "@/components/organisms/projectConfigDropdown/projectConfigDropdown";
 
 export default function ProjectView() {
-  
 
   return <article className={styles.pageContainer}>
-    
-    <header className={styles.header}>
-      <ProjectTitleInput variant={ INPUT_VARIANT.secondary} />
-    </header>
 
     <section>
 
@@ -25,9 +20,8 @@ export default function ProjectView() {
         </section>
         <aside className={styles.sidebar}>
 
-          <Dropdown label="View Mode" />
-          <Dropdown label="Pixelator" />
-          <Dropdown label="download"/>
+          <PixelatorConfigDropdown />
+          <ProjectConfigDropdown/>
 
         </aside>
       </div>
