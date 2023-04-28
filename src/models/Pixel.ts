@@ -1,4 +1,4 @@
-import { ColorRBG } from "./colorRBG";
+import { ColorRBG } from "./ColorRBG";
 
 export class Pixel{
   constructor(

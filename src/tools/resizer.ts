@@ -2,7 +2,7 @@ import { DIRECTION } from "@/constants/directions";
 import { ShapeSide } from "@/models/ShapeSide";
 import { Size } from "@/models/Size";
 
-export class Resize{
+export class Resizer{
 
   private size: Size;
 

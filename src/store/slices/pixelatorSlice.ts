@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '@/store'
 import { Pixel } from '@/models/Pixel'
+import { Matrix } from '@/models/Matrix'
 
 interface PixelatorState {
   
@@ -8,7 +9,7 @@ interface PixelatorState {
     pixelSize: number,
   },
   active:boolean,
-  pixels?: Pixel[]
+  pixels?: Matrix<Pixel>
 }
 
 // Define the initial state using that type
@@ -31,7 +32,7 @@ export const PixelatorSlice = createSlice({
       state.config.pixelSize=action.payload
     },
 
-    setPixels: (state, action: PayloadAction<Pixel[]>) => {
+    setPixels: (state, action: PayloadAction<Matrix<Pixel>>) => {
       state.pixels=action.payload
     }
   },
