@@ -7,9 +7,14 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import { imageStateActions } from "@/store/slices/imageSlice"
 import { classnames } from "@/utils/classnames"
 import { fileToBlob } from "@/utils/fileToX"
+
 import styles from "./index.module.scss"
 
-export const ProjectImageInput = () => {
+export const ProjectImageInput: React.FC = () => {
+
+  const imgURL = useAppSelector(store => store.image.url)
+  const hasPixels = useAppSelector(store => store.pixelatorMode.generated)
+  const pixelModeActive= useAppSelector(store => store.pixelatorMode.active)
   const dispatch = useAppDispatch()
 
   const onFileSelection = async (files?: File[]) => {
@@ -20,8 +25,15 @@ export const ProjectImageInput = () => {
     dispatch(imageStateActions.buildImageStateFromBlob(blob))
   }
   
+  if (imgURL && !hasPixels  || !pixelModeActive) {
+    return <div
+      className={styles.imagePreview}
+      style={{['--bg-original-image' as any] :`url(${imgURL})`}}
+    ></div>
+  }
 
-  return <>
+  if (!hasPixels || !imgURL) {
+    return <>
       <FileDrop className={styles.fileBox} accept=".jpeg" keepBorders onChange=   {(files:File[])=>onFileSelection(files)}>
         <CenteredBox className={classnames(styles.fileSectionContainer)}>
 
@@ -37,5 +49,9 @@ export const ProjectImageInput = () => {
 
         </CenteredBox>
       </FileDrop>
-  </>
+    </>
+
+  }
+  
+  return <></>
 }

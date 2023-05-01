@@ -1,0 +1,15 @@
+.imgGrid{
+
+
+}
+
+.row{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+ 
+}
+
+.cell{
+  background-color: var(--bg-color);
+  aspect-ratio: 1 / 1;
+}

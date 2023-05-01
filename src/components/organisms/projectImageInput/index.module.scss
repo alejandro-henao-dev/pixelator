@@ -4,3 +4,13 @@
   text-align: center;
 }
 
+.imagePreview{
+  height: 100%;
+  width: 100%;
+  text-align: center;
+
+  background-image:  var(--bg-original-image);
+  object-fit: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+}

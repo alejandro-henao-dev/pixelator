@@ -7,6 +7,7 @@ import { ProjectTitleInput } from "@/components/organisms/projectTitleInput";
 import styles from "./project.module.scss"
 import { PixelatorConfigDropdown } from "@/components/organisms/pixelatorConfigDropdown";
 import { ProjectConfigDropdown } from "@/components/organisms/projectConfigDropdown/projectConfigDropdown";
+import { PixelatedImage } from "@/components/organisms/PixelatedImage";
 
 export default function ProjectView() {
 
@@ -16,7 +17,8 @@ export default function ProjectView() {
 
       <div  className={styles.workspace }>
         <section className={styles.canvas}>
-          <ProjectImageInput/>
+          <ProjectImageInput />
+          <PixelatedImage/>
         </section>
         <aside className={styles.sidebar}>
 

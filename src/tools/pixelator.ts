@@ -7,6 +7,7 @@ import { Size } from '@/models/Size';
 import { Resizer } from '@/tools/resizer';
 import P5 from 'p5';
 
+
 export class Pixelator{
   private pixelMatrix?: Matrix<Pixel>;
 
@@ -20,7 +21,8 @@ export class Pixelator{
   
   pixelate(pixelSize: number): Promise<Matrix<Pixel>> {
     const canvas = document.createElement('canvas')
-    return new Promise(resolve => {
+    return new Promise(async resolve => {
+      const P5=(await import('p5')).default
       new P5(p5 => { 
         pixelatorSketch(p5, this.imgURL, pixelSize)
           .then( pixelMatrix =>{
@@ -48,17 +50,21 @@ const pixelatorSketch = (
     const imgSize=new Size(img.width, img.height)
     const imgResize = new Resizer(imgSize)
     
-    const canvasSize=imgResize.resizeByMaxSide(maxImageSize)
+    
+    const canvasSize = imgResize.resizeByMaxSide(maxImageSize)
+    
+    
     p5.createCanvas(canvasSize.width, canvasSize.height);
     p5.noLoop();  
   }
   
-  p5.draw=() => {
+  p5.draw = () => {
+    p5.image(img, 0, 0, p5.width, p5.height)
     const pixels = pixelate(p5, new Size(pixelSize, pixelSize))
 
     const pixelateVersionSize = new Size(
-      p5.width / pixelSize,
-      p5.height / pixelSize
+      Math.floor(p5.width / pixelSize),
+      Math.floor(p5.height / pixelSize)
     )
     p5.remove()
     resolve(new Matrix<Pixel>(pixels, pixelateVersionSize))
@@ -71,6 +77,7 @@ const pixelate = (p5:P5, size:Size):Array<Array<Pixel>> =>{
   
   for (let col = 0; col < p5.height; col += size.height) {
     pixels.push([])
+    
     for (let row = 0; row < p5.width; row += size.width) {
       let color = getAreaAverageColor(p5, new Point(row, col), size);
       pixels.at(-1)?.push( new Pixel(color) )
@@ -86,10 +93,12 @@ const getAreaAverageColor = (p5:P5, startPoint:Point, size:Size):ColorRBG =>{
   
   for (let row = startPoint.x; row < startPoint.x + size.width && row < p5.width; row++) {
     for (let col = startPoint.y; col < startPoint.y + size.height && col < p5.height; col++) {
+      
       let c = p5.get(row, col);
       r += p5.red(c);
       g += p5.green(c);
       b += p5.blue(c);
+      // console.log("-----",r,g,b)
       count++;
     }
   }

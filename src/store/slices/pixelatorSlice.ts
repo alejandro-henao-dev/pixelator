@@ -9,7 +9,8 @@ interface PixelatorState {
     pixelSize: number,
   },
   active:boolean,
-  pixels?: Matrix<Pixel>
+  pixels?: Matrix<Pixel>,
+  generated: boolean
 }
 
 // Define the initial state using that type
@@ -19,6 +20,7 @@ const initialState: PixelatorState = {
   },
   active:false,
   pixels: undefined,
+  generated: false
 }
 
 export const PixelatorSlice = createSlice({
@@ -26,14 +28,20 @@ export const PixelatorSlice = createSlice({
   initialState,
   reducers: {
     setActive: (state, action: PayloadAction<boolean>) => {
-      state.active=action.payload
+      state.active = action.payload
+      if (!action.payload) {
+        // state.generated = false
+        // state.pixels=undefined  
+      }
+      
     },
     setPixelSize: (state, action: PayloadAction<number>) => {
       state.config.pixelSize=action.payload
     },
 
     setPixels: (state, action: PayloadAction<Matrix<Pixel>>) => {
-      state.pixels=action.payload
+      state.pixels = action.payload
+      state.generated=true
     }
   },
 })
