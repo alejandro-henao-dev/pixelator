@@ -7,8 +7,10 @@ export default function Document() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <body>
+        
         <Main />
         <NextScript />
+        <div id="popup"></div>
       </body>
     </Html>
   )
