@@ -25,14 +25,9 @@ export const ProjectImageInput: React.FC = () => {
     dispatch(imageStateActions.buildImageStateFromBlob(blob))
   }
   
-  if (imgURL && !hasPixels  || !pixelModeActive) {
-    return <div
-      className={styles.imagePreview}
-      style={{['--bg-original-image' as any] :`url(${imgURL})`}}
-    ></div>
-  }
+  
 
-  if (!hasPixels || !imgURL) {
+  if (!imgURL) {
     return <>
       <FileDrop className={styles.fileBox} accept=".jpeg" keepBorders onChange=   {(files:File[])=>onFileSelection(files)}>
         <CenteredBox className={classnames(styles.fileSectionContainer)}>
@@ -53,5 +48,19 @@ export const ProjectImageInput: React.FC = () => {
 
   }
   
+  if ( imgURL  && !hasPixels) {
+    return <div
+      className={styles.imagePreview}
+      style={{['--bg-original-image' as any] :`url(${imgURL})`}}
+    ></div>
+  }
+
+  if (!pixelModeActive) {
+    return <div
+    className={styles.imagePreview}
+    style={{['--bg-original-image' as any] :`url(${imgURL})`}}
+  ></div> 
+  }
+
   return <></>
 }
