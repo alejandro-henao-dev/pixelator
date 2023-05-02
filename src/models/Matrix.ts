@@ -34,7 +34,7 @@ export class Matrix<T> {
   
 
   getSoroundingMatrix(centerPoint: Point, threshold: number = 1): Matrix<T> {
-    console.log("subgrid", centerPoint)
+    
     if (threshold < 1) {
       throw new Error("Surounding threshold should be at least 1")
     }
