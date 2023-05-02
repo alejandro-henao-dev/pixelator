@@ -3,26 +3,36 @@ import { Matrix } from "@/models/Matrix";
 import { Pixel } from "@/models/Pixel";
 import { Point } from "@/models/Point";
 import styles from "./index.module.scss"
+import { PixelDraw } from "@/components/atoms/pixelDraw";
 
 export interface PixelGridProps{
   pixels: Matrix<Pixel>,
   selected?: Point,
-  onSelect?:(point:Point)=>void
+  onPixelClick?: (point: Point) => void,
+  onPixelMouseEnter?: (event: any) => void,
+  onPixelMouseLeave?: (event: any) => void,
 }
 
-export const PixelGrid: React.FC<PixelGridProps> = ({ pixels, selected }) => {
-  console.log("griddd")
+export const PixelGrid: React.FC<PixelGridProps> = ({
+  pixels,
+  selected,
+  onPixelClick: onClick=()=>{},
+  onPixelMouseEnter=() => { },
+  onPixelMouseLeave=()=>{}
+}) => {
 
   return <>
     <div className={styles.imgGrid}>
     {pixels.cells.map((row, rowIndex) => {
       return <div className={styles.row} key={rowIndex}>
-          {row.map((cell, indexCell) => <div
-            style={{['--bg-color' as any]: `rgb(${cell.color.r},${cell.color.g},${cell.color.b})`}} 
-            key={`${rowIndex} - ${indexCell}`}
+          {row.map((pixel, colIndex) => <PixelDraw
+            pixel={pixel}
+            key={`${rowIndex} - ${colIndex}`}
             className={styles.cell}
-          >
-          </div>)}
+            onMouseEnter={onPixelMouseEnter}
+            onMouseLeave={onPixelMouseLeave}
+            onClick={()=>onClick(new Point(rowIndex, colIndex))}
+          />)}
       </div>
     })}
   </div>
