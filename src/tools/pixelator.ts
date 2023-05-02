@@ -75,11 +75,11 @@ const pixelatorSketch = (
 const pixelate = (p5:P5, size:Size):Array<Array<Pixel>> =>{
   const pixels:Array<Array<Pixel>> = []
   
-  for (let col = 0; col < p5.height; col += size.height) {
+  for (let y = 0; y < p5.height; y += size.height) {
     pixels.push([])
-    
-    for (let row = 0; row < p5.width; row += size.width) {
-      let color = getAreaAverageColor(p5, new Point(row, col), size);
+    for (let x = 0; x < p5.width; x += size.width) {
+      const currentCoord=new Point(x,y)
+      let color = getAreaAverageColor(p5, currentCoord, size);
       pixels.at(-1)?.push( new Pixel(color) )
     }
     
@@ -98,7 +98,6 @@ const getAreaAverageColor = (p5:P5, startPoint:Point, size:Size):ColorRBG =>{
       r += p5.red(c);
       g += p5.green(c);
       b += p5.blue(c);
-      // console.log("-----",r,g,b)
       count++;
     }
   }
