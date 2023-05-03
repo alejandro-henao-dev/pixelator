@@ -52,7 +52,7 @@ export class Matrix<T> {
       subMatrix.push([])
       for (let x = centerPoint.x - threshold; x <= centerPoint.x + threshold; x++) {
         const currentCoord = new Point(x, y)
-        if (this.pointIsOutOfBoundaries(currentCoord)) {
+        if (this.isOutOfBoundaries(currentCoord)) {
           subMatrix?.at(-1)?.push( this.emptyCell ) 
         } else {
           subMatrix?.at(-1)?.push( this.cells[currentCoord.y][currentCoord.x]  ) 
@@ -62,6 +62,16 @@ export class Matrix<T> {
     }
     
     return new Matrix<T>(subMatrix, this.emptyCell)
+  }
+
+  isOutOfBoundaries(point: Point) {
+    if (point.x >= this.size.width || point.y >= this.size.height) {
+      return true
+    }
+
+    if (point.x < 0 || point.y < 0) {
+      return true
+    }
   }
 
   private getSize(): Size{
@@ -80,13 +90,4 @@ export class Matrix<T> {
     return this.cells.length
   }
 
-  private pointIsOutOfBoundaries(point: Point) {
-    if (point.x >= this.size.width || point.y >= this.size.height) {
-      return true
-    }
-
-    if (point.x < 0 || point.y < 0) {
-      return true
-    }
-  }
 }

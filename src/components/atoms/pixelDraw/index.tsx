@@ -20,7 +20,7 @@ export const PixelDraw: React.FC<PixelDrawProps> = ({
   return <div
     style={{ ['--pixel-color' as any]: `rgb(${pixel.color.r},${pixel.color.g},${pixel.color.b})` }}
     onClick={onClick}
-    
+    data-empty={pixel.empty}
     onMouseEnter={onMouseEnter}
     onMouseLeave={onMouseLeave}
     className={classnames(styles.pixel, className)}

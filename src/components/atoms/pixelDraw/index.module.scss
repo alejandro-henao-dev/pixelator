@@ -1,3 +1,9 @@
 .pixel{
   background-color: var(--pixel-color);
+
+  &[data-empty="true"]{
+    position: relative;
+    opacity: 0;
+    pointer-events: none;
+  }
 }

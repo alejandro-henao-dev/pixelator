@@ -39,12 +39,10 @@ export const PixelatorConfigDropdown: React.FC<PixelatorConfigDropdownProps> = (
     if (!imageURL) {
       return
     }
-    console.log('generating')
     const pixelator = new Pixelator(imageURL)
 
     const pixelMatrix = await pixelator.pixelate(config.pixelSize)
-    console.log(pixelMatrix)
-    dispatch(pixelatorStateActions.setPixels(Object.freeze(pixelMatrix)))
+    dispatch(pixelatorStateActions.setPixels(pixelMatrix))
   }
   
   return <Dropdown label="Pixelator" >
