@@ -2,6 +2,7 @@
 import { ColorRBG } from '@/models/ColorRBG';
 import { Matrix } from '@/models/Matrix';
 import { Pixel } from '@/models/Pixel';
+import { PixelMatrix } from '@/models/PixelMatrix';
 import { Point } from '@/models/Point';
 import { Size } from '@/models/Size';
 import { Resizer } from '@/tools/resizer';
@@ -9,7 +10,7 @@ import P5 from 'p5';
 
 
 export class Pixelator{
-  private pixelMatrix?: Matrix<Pixel>;
+  private pixelMatrix?: PixelMatrix;
 
   constructor(
     public readonly imgURL: string,
@@ -19,7 +20,7 @@ export class Pixelator{
     return this.pixelMatrix
   }
   
-  pixelate(pixelSize: number): Promise<Matrix<Pixel>> {
+  pixelate(pixelSize: number): Promise<PixelMatrix> {
     const canvas = document.createElement('canvas')
     return new Promise(async resolve => {
       const P5=(await import('p5')).default
@@ -38,7 +39,7 @@ export class Pixelator{
 
 const pixelatorSketch = (
   p5: P5, imgURL: string, pixelSize: number, maxImageSize: number = 500
-): Promise<Matrix<Pixel>> => new Promise(resolve => {
+): Promise<PixelMatrix> => new Promise(resolve => {
   
   let img:P5.Image;
   
@@ -61,13 +62,9 @@ const pixelatorSketch = (
   p5.draw = () => {
     p5.image(img, 0, 0, p5.width, p5.height)
     const pixels = pixelate(p5, new Size(pixelSize, pixelSize))
-
-    const pixelateVersionSize = new Size(
-      Math.floor(p5.width / pixelSize),
-      Math.floor(p5.height / pixelSize)
-    )
     p5.remove()
-    resolve(new Matrix<Pixel>(pixels, pixelateVersionSize))
+    const matrix= new PixelMatrix(pixels)
+    resolve(matrix)
   }
 })
 
@@ -80,9 +77,8 @@ const pixelate = (p5:P5, size:Size):Array<Array<Pixel>> =>{
     for (let x = 0; x < p5.width; x += size.width) {
       const currentCoord=new Point(x,y)
       let color = getAreaAverageColor(p5, currentCoord, size);
-      pixels.at(-1)?.push( new Pixel(color) )
+      pixels.at(-1)?.push( new Pixel(color, new Point(x,y)) )
     }
-    
   }
   return pixels
 }
@@ -91,10 +87,9 @@ const getAreaAverageColor = (p5:P5, startPoint:Point, size:Size):ColorRBG =>{
   let r = 0, g = 0, b = 0;
   let count = 0;
   
-  for (let row = startPoint.x; row < startPoint.x + size.width && row < p5.width; row++) {
-    for (let col = startPoint.y; col < startPoint.y + size.height && col < p5.height; col++) {
-      
-      let c = p5.get(row, col);
+  for (let y = startPoint.y; y < startPoint.y + size.height && y < p5.height; y++) {
+    for (let x = startPoint.x; x < startPoint.x + size.width && x < p5.width; x++) {  
+      let c = p5.get(x, y);
       r += p5.red(c);
       g += p5.green(c);
       b += p5.blue(c);
