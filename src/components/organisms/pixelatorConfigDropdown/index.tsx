@@ -30,6 +30,7 @@ export const PixelatorConfigDropdown: React.FC<PixelatorConfigDropdownProps> = (
   const config = useAppSelector(state => state.pixelatorMode.config)
   const pixels = useAppSelector(state => state.pixelatorMode.pixels)
   const imageURL = useAppSelector(state => state.image.url)
+  const drawGridBorders=useAppSelector(state => state.pixelatorMode.drawGridBorders)
 
   const dispatch = useDispatch()
   
@@ -75,14 +76,25 @@ export const PixelatorConfigDropdown: React.FC<PixelatorConfigDropdownProps> = (
       {active && imageURL && pixels && <>
         <section>
           <header>
-            <Text as="h3" size={TEXT_SIZE.small}>Grid Data </Text>
+            {/* <Text as="h3" size={TEXT_SIZE.small}>Grid Data </Text> */}
           </header>
           <br/>
           <ul>
-            <li>
-              <Text as="span" weight={TEXT_WEIGHT.bold} size={TEXT_SIZE.small}>Grid size: </Text>
+            <li className={styles.field}>
+              <Text as="label" weight={TEXT_WEIGHT.bold} size={TEXT_SIZE.small} relativeSize >Draw Pixel&apos;s Borders</Text>
+              
+              <span className={styles.fieldValue}>
+                <ToggleSwitch  value={drawGridBorders} onChange={(val:boolean)=>dispatch(pixelatorStateActions.setDrawGridBorders(val))} />
+              </span>
+              
+            </li>
+            <li className={styles.field}>
+              <Text as="label" weight={TEXT_WEIGHT.bold} size={TEXT_SIZE.small}
+              relativeSize >Grid size: </Text>
 
-              <Text as="span" size={TEXT_SIZE.small}>{`W: ${ pixels?.size.width} - H: ${pixels?.size.height}`}</Text>
+              <Text as="span" size={TEXT_SIZE.small} className={styles.fieldValue}>
+                {`W: ${pixels?.size.width} - H: ${pixels?.size.height}`}
+              </Text>
             </li>
           </ul>
 

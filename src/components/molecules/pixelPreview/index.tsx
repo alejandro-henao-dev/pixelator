@@ -1,6 +1,6 @@
 import { PixelDraw } from "@/components/atoms/pixelDraw"
 import { Text } from "@/components/atoms/text"
-import { ColorRBG } from "@/models/ColorRBG"
+import { ColorRGBA } from "@/models/ColorRBG"
 import { Matrix } from "@/models/Matrix"
 import { Pixel } from "@/models/Pixel"
 import { PixelMatrix } from "@/models/PixelMatrix"
@@ -18,13 +18,16 @@ export interface PixelPreviewProps{
   coords: Point,
   onNext?: () => void,
   onPrev?:()=>void
-
+  displayBorders?: boolean,
+  borderColor?:ColorRGBA
 }
 
 export const PixelPreview: React.FC<PixelPreviewProps> = ({
   originalSize,
   matrix,
   coords,
+  displayBorders,
+  borderColor,
   onNext=()=>{},
   onPrev=()=>{}
 }) => {
@@ -47,6 +50,8 @@ export const PixelPreview: React.FC<PixelPreviewProps> = ({
     
 
     {<PixelGrid
+      displayBorders={displayBorders}
+      borderColor={borderColor}
       selected={centerPoint}
       className={styles.gridContainer}
       selectedPixelClassName={styles.pixelCurrent}

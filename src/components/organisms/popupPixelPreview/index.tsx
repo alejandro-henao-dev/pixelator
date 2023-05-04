@@ -1,6 +1,7 @@
 import { Text } from "@/components/atoms/text"
 import { PixelPreview } from "@/components/molecules/pixelPreview"
 import { Popup, PopupProps } from "@/components/molecules/popup"
+import { ColorRGBA } from "@/models/ColorRBG"
 import { Matrix } from "@/models/Matrix"
 import { Pixel } from "@/models/Pixel"
 import { PixelMatrix } from "@/models/PixelMatrix"
@@ -73,6 +74,8 @@ export const PopupPixelPreview:React.FC<PopupPixelPreview> = (props) => {
 
   return selectedSubgrid && selectedPixelCoords && pixels ? <Popup {...props}>
     <PixelPreview
+      displayBorders
+      borderColor={new ColorRGBA(0,0,0,0.3)}
       originalSize={pixels?.size}
       matrix={selectedSubgrid}
       coords={selectedPixelCoords}

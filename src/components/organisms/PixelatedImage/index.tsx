@@ -12,6 +12,7 @@ export const PixelatedImage: React.FC = () => {
   const pixels = useAppSelector(store => store.pixelatorMode.pixels)
   const active = useAppSelector(store => store.pixelatorMode.active)
   const selected = useAppSelector(store => store.pixelatorMode.selectedCoords)
+  const drawGridBorders=useAppSelector(store=>store.pixelatorMode.drawGridBorders)
   
   const dispatch = useAppDispatch()
   
@@ -44,9 +45,10 @@ export const PixelatedImage: React.FC = () => {
 
   return pixels && active ? <>
     <PixelGrid pixels={pixels}
-    onPixelMouseEnter={onPixelMouseEnter}
-    onPixelMouseLeave={onPixelMouseLeave}
-    onPixelClick={onPixelClick}
+      onPixelMouseEnter={onPixelMouseEnter}
+      onPixelMouseLeave={onPixelMouseLeave}
+        onPixelClick={onPixelClick}
+      displayBorders={drawGridBorders}
     /> 
 
     { <PopupPixelPreview onClose={onPopupClose } />}

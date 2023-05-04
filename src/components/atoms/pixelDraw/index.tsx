@@ -4,7 +4,8 @@ import styles from './index.module.scss'
 
 export interface PixelDrawProps{
   pixel: Pixel,
-  className: string,
+  className?: string,
+  cssVars?: Record<string,string>
   onClick?: (e:any) => void,
   onMouseEnter?: (e: any) => void
   onMouseLeave?: (e:any)=>void
@@ -14,11 +15,16 @@ export const PixelDraw: React.FC<PixelDrawProps> = ({
   className,
   onClick = () => { },
   onMouseEnter = () => { },
-  onMouseLeave=()=>{}
+  onMouseLeave = () => { },
+  cssVars
 }) => { 
 
+
   return <div
-    style={{ ['--pixel-color' as any]: `rgb(${pixel.color.r},${pixel.color.g},${pixel.color.b})` }}
+    style={{
+      ['--pixel-color' as any]: pixel.color.getCssFormat(),
+      ...cssVars
+    }}
     onClick={onClick}
     data-empty={pixel.empty}
     onMouseEnter={onMouseEnter}

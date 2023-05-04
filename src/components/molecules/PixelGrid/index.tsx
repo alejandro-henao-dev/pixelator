@@ -5,6 +5,7 @@ import { Point } from "@/models/Point";
 import styles from "./index.module.scss"
 import { PixelDraw } from "@/components/atoms/pixelDraw";
 import { classnames } from "@/utils/classnames";
+import { ColorRGBA } from "@/models/ColorRBG";
 
 export interface PixelGridProps{
   pixels: Matrix<Pixel>,
@@ -14,7 +15,9 @@ export interface PixelGridProps{
   onPixelMouseLeave?: (event: any) => void,
   className?: string,
   pixelClassName?: string,
-  selectedPixelClassName?:string
+  selectedPixelClassName?: string,
+  displayBorders?: boolean,
+  borderColor?:ColorRGBA
 }
 
 export const PixelGrid: React.FC<PixelGridProps> = ({
@@ -25,7 +28,9 @@ export const PixelGrid: React.FC<PixelGridProps> = ({
   selectedPixelClassName,
   onPixelClick: onClick=()=>{},
   onPixelMouseEnter=() => { },
-  onPixelMouseLeave=()=>{}
+  onPixelMouseLeave = () => { },
+  displayBorders,
+  borderColor= new ColorRGBA(0,0,0)
 }) => {
 
   return <>
@@ -34,9 +39,17 @@ export const PixelGrid: React.FC<PixelGridProps> = ({
       return <div className={styles.row} key={`row - ${y}`}>
         {row.map((pixel, x) => <>
           <PixelDraw
+            cssVars={{
+              '--border-color':borderColor.getCssFormat()
+            }}
             pixel={pixel}
             key={`${y} - ${x}`}
-            className={classnames(styles.cell, pixelClassName, selected?.equalTo(new Point(x,y)) && selectedPixelClassName )}
+            className={classnames(
+              styles.cell,
+              pixelClassName,
+              displayBorders && styles.borders,
+              selected?.equalTo(new Point(x, y)) && selectedPixelClassName
+            )}
             onMouseEnter={onPixelMouseEnter}
             onMouseLeave={onPixelMouseLeave}
             onClick={()=>onClick(new Point(x, y))}

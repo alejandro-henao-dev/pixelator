@@ -15,7 +15,8 @@ interface PixelatorState {
   active:boolean,
   pixels?: PixelMatrix,
   generated: boolean,
-  selectedCoords: Point | null
+  selectedCoords: Point | null,
+  drawGridBorders:boolean
 }
 
 // Define the initial state using that type
@@ -26,7 +27,8 @@ const initialState: PixelatorState = {
   active:true,
   pixels: undefined,
   generated: false,
-  selectedCoords:null
+  selectedCoords: null,
+  drawGridBorders:false
 }
 
 export const PixelatorSlice = createSlice({
@@ -35,11 +37,6 @@ export const PixelatorSlice = createSlice({
   reducers: {
     setActive: (state, action: PayloadAction<boolean>) => {
       state.active = action.payload
-      if (!action.payload) {
-        // state.generated = false
-        // state.pixels=undefined  
-      }
-      
     },
     setPixelSize: (state, action: PayloadAction<number>) => {
       state.config.pixelSize=action.payload
@@ -52,6 +49,10 @@ export const PixelatorSlice = createSlice({
 
     setSelectedPixel: (state, action: PayloadAction<Point | null>) => {
       state.selectedCoords=action.payload
+    },
+
+    setDrawGridBorders: (state, action: PayloadAction<boolean>) => {
+      state.drawGridBorders=action.payload
     }
   },
 })

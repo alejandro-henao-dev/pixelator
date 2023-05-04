@@ -1,5 +1,5 @@
 
-import { ColorRBG } from '@/models/ColorRBG';
+import { ColorRGBA } from '@/models/ColorRBG';
 import { Matrix } from '@/models/Matrix';
 import { Pixel } from '@/models/Pixel';
 import { PixelMatrix } from '@/models/PixelMatrix';
@@ -83,7 +83,7 @@ const pixelate = (p5:P5, size:Size):Array<Array<Pixel>> =>{
   return pixels
 }
 
-const getAreaAverageColor = (p5:P5, startPoint:Point, size:Size):ColorRBG =>{
+const getAreaAverageColor = (p5:P5, startPoint:Point, size:Size):ColorRGBA =>{
   let r = 0, g = 0, b = 0;
   let count = 0;
   
@@ -101,6 +101,6 @@ const getAreaAverageColor = (p5:P5, startPoint:Point, size:Size):ColorRBG =>{
   g /= count;
   b /= count;
 
-  return new ColorRBG(r,g,b)
+  return new ColorRGBA(r,g,b)
 }
 

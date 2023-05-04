@@ -12,5 +12,9 @@
 .cell{
   background-color: var(--bg-color);
   aspect-ratio: 1 / 1;
-  border: solid 1px black;
+  
+}
+
+.borders{
+  border: solid 1px var(--border-color, black);
 }
