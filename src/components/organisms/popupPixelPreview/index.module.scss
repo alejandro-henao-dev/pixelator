@@ -1,0 +1,66 @@
+
+$container-padding:2rem;
+
+.container{
+  background-color: var(--background-color);
+  padding:$container-padding;
+  box-shadow: 0 5px 10px 0px rgba(0,0,0,0.57);
+  position: relative;
+}
+
+.header{
+  display: flex;
+  flex-direction: row;
+  gap:1rem;
+  justify-content: center;
+  margin-bottom:$container-padding;
+  max-width: 100%;
+  align-items: center;
+  h1{
+    width: 100%;
+  }
+}
+
+
+.doneIcon{
+  font-size: 2rem;
+  justify-self: flex-end;
+  color: var(--background-color-light);
+  cursor: pointer;
+}
+
+.isDone{
+  color: var(--status-color-success);
+}
+
+.nav{
+
+  .right,.left,.up,.down{
+    position: absolute;
+    font-size: 2rem;
+    cursor: pointer;
+  }
+
+  .right,.left{
+    top:50%;
+    transform:translateY(-50% );
+  }
+  .up,.down{
+    left:50%;
+    transform:translateX(-50% );
+  }
+
+  $distance:calc(-1* $container-padding);
+  .right{  
+    right: $distance ;
+  }
+  .left{
+    left: $distance;
+  }
+  .up{
+    top: $distance;
+  }
+  .down{
+    bottom: $distance;
+  }
+}

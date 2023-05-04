@@ -1,4 +1,5 @@
 import { Text } from "@/components/atoms/text"
+import { Title } from "@/components/atoms/title"
 import { PixelPreview } from "@/components/molecules/pixelPreview"
 import { Popup, PopupProps } from "@/components/molecules/popup"
 import { ColorRGBA } from "@/models/ColorRBG"
@@ -8,13 +9,17 @@ import { PixelMatrix } from "@/models/PixelMatrix"
 import { Point } from "@/models/Point"
 import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import { pixelatorStateActions } from "@/store/slices/pixelatorSlice"
+import { classnames } from "@/utils/classnames"
+import { CaretDownOutlined, CaretLeftOutlined, CaretRightOutlined, CaretUpOutlined, CheckCircleOutlined } from "@ant-design/icons"
 import { useEffect, useState } from "react"
+import styles from "./index.module.scss"
 
 const ERROR_MSG = {
   noError:"",
   notPrev: "There are no more pixes before this one",
   notNext:"There are no more pixes before this one"
 }
+
 export interface PopupPixelPreview extends PopupProps{}
 
 export const PopupPixelPreview:React.FC<PopupPixelPreview> = (props) => {
@@ -35,12 +40,10 @@ export const PopupPixelPreview:React.FC<PopupPixelPreview> = (props) => {
     setSelectedSubgrid(subgrid)
   }, [selectedPixelCoords, pixels])
 
-  const onNext = () => {
+  const onRight = () => {
     if (!selectedPixelCoords || !pixels) {
       return
-    }
-
-    
+    }    
     if (selectedPixelCoords.x + 1 < pixels.size.width) {
       setMessage(ERROR_MSG.noError)
       const newCoords = new Point(selectedPixelCoords.x + 1, selectedPixelCoords.y)
@@ -50,17 +53,12 @@ export const PopupPixelPreview:React.FC<PopupPixelPreview> = (props) => {
       setMessage(ERROR_MSG.notPrev)
       
     }
-
-    
-    
   }
 
-  const onPrev = () => {
+  const onLeft = () => {
     if (!selectedPixelCoords || !pixels) {
       return
-    }
-
-    
+    }    
     if (selectedPixelCoords.x - 1 >= 0) {
       setMessage(ERROR_MSG.noError)
       const newCoords = new Point(selectedPixelCoords.x - 1, selectedPixelCoords.y)
@@ -69,23 +67,79 @@ export const PopupPixelPreview:React.FC<PopupPixelPreview> = (props) => {
     } else {
       setMessage(ERROR_MSG.notPrev)
     }
+  }
 
+  const onUp = () => {
+    if (!selectedPixelCoords || !pixels) {
+      return
+    }    
+    if (selectedPixelCoords.y - 1 >= 0) {
+      setMessage(ERROR_MSG.noError)
+      const newCoords = new Point(selectedPixelCoords.x, selectedPixelCoords.y - 1)
+      dispatch(pixelatorStateActions.setSelectedPixel(newCoords))
+      
+    } else {
+      setMessage(ERROR_MSG.notPrev)
+    }
+  }
+
+  const onDown = () => {
+    if (!selectedPixelCoords || !pixels) {
+      return
+    }    
+    if (selectedPixelCoords.y + 1 < pixels.size.height) {
+      setMessage(ERROR_MSG.noError)
+      const newCoords = new Point(selectedPixelCoords.x, selectedPixelCoords.y + 1)
+      dispatch(pixelatorStateActions.setSelectedPixel(newCoords))  
+      
+    } else {
+      setMessage(ERROR_MSG.notPrev)
+    }
   }
 
   return selectedSubgrid && selectedPixelCoords && pixels ? <Popup {...props}>
-    <PixelPreview
-      displayBorders
-      borderColor={new ColorRGBA(0,0,0,0.3)}
-      originalSize={pixels?.size}
-      matrix={selectedSubgrid}
-      coords={selectedPixelCoords}
-      onNext={onNext}
-      onPrev={onPrev}
-    />
+    <div className={styles.container}>
 
-    <Text>
-      {message}
-    </Text>
+      <nav className={styles.nav}>
+        <div className={styles.up} onClick={onUp}><CaretUpOutlined /></div>
+        <div className={styles.down} onClick={onDown}><CaretDownOutlined /></div>
+        <div className={styles.left} onClick={onLeft}><CaretLeftOutlined /></div>
+        <div className={styles.right} onClick={onRight}><CaretRightOutlined /></div>
+      </nav>
+
+      <header className={styles.header}>
+        <Title>
+          Coords:
+          {' '}
+          <Text as="span">
+            X: {selectedPixelCoords.x + 1} / {pixels.size.width}
+            {' - '}
+            Y: {selectedPixelCoords.y + 1} / {pixels.size.height}
+          </Text>
+          
+        </Title>
+
+        <span className={classnames(
+          styles.doneIcon,
+          // styles.isDone
+        )}>
+          <CheckCircleOutlined />
+        </span>
+        
+      </header>
+
+
+      <PixelPreview
+        displayBorders
+        borderColor={new ColorRGBA(0,0,0,0.3)}
+        matrix={selectedSubgrid}
+      />
+
+      <Text>
+        {message}
+      </Text>
+      
+    </div>
   </Popup>
 
   : <></>
