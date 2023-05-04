@@ -1,4 +1,5 @@
 import { PixelGrid } from "@/components/molecules/PixelGrid"
+import { useHotKeysPixelNavigation } from "@/hooks/useHotKeysPixelNavigation"
 import { Point } from "@/models/Point"
 import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import { pixelatorStateActions } from "@/store/slices/pixelatorSlice"
@@ -15,7 +16,7 @@ export const PixelatedImage: React.FC = () => {
   const drawGridBorders=useAppSelector(store=>store.pixelatorMode.drawGridBorders)
   
   const dispatch = useAppDispatch()
-  
+  useHotKeysPixelNavigation()
 
   useEffect(() => {
     if (selected) {

@@ -15,12 +15,14 @@
     "@types/p5": "^1.6.1",
     "@types/react": "18.0.34",
     "@types/react-dom": "18.0.11",
+    "@use-gesture/react": "^10.2.26",
     "eslint": "8.38.0",
     "eslint-config-next": "13.3.0",
     "next": "13.3.0",
     "p5": "^1.6.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hotkeys-hook": "^4.4.0",
     "react-redux": "^8.0.5",
     "typescript": "5.0.4"
   }
