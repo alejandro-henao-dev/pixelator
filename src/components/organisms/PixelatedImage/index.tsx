@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import { pixelatorStateActions } from "@/store/slices/pixelatorSlice"
 import { useEffect, useState } from "react"
 import { PopupPixelPreview } from "../popupPixelPreview"
-
+import styles from "./index.module.scss"
 
 export const PixelatedImage: React.FC = () => { 
 
@@ -23,14 +23,6 @@ export const PixelatedImage: React.FC = () => {
     }
   },[selected])
 
-  const onPixelMouseEnter = (e: any) => {
-    e.target.style.scale = "1.3"
-    e.target.style.zIndex = "2"
-  }
-  const onPixelMouseLeave = (e: any) => {
-    e.target.style.scale = 'unset'
-    e.target.style.zIndex = "0"
-  }
 
   const onPixelClick = (point: Point) => {
     dispatch(pixelatorStateActions.setSelectedPixel(point))
@@ -40,18 +32,19 @@ export const PixelatedImage: React.FC = () => {
 
   const onPopupClose = () => {
     setPopupOpen(false)
-    dispatch(pixelatorStateActions.setSelectedPixel(null))
+    // dispatch(pixelatorStateActions.setSelectedPixel(null))
   }
 
   return pixels && active ? <>
     <PixelGrid pixels={pixels}
-      onPixelMouseEnter={onPixelMouseEnter}
-      onPixelMouseLeave={onPixelMouseLeave}
-        onPixelClick={onPixelClick}
+      onPixelClick={onPixelClick}
+      pixelClassName={styles.pixel}
       displayBorders={drawGridBorders}
+      selectedPixelClassName={styles.selectedPixel}
+      selected={selected}
     /> 
 
-    { <PopupPixelPreview onClose={onPopupClose } />}
+    {popupOpen &&  <PopupPixelPreview onClose={onPopupClose } />}
   
   </>: <></>
   
