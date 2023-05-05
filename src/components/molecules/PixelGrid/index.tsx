@@ -3,7 +3,7 @@ import { Matrix } from "@/models/Matrix";
 import { Pixel } from "@/models/Pixel";
 import { Point } from "@/models/Point";
 import styles from "./index.module.scss"
-import { PixelDraw } from "@/components/atoms/pixelDraw";
+import { PixelDraw, PixelDrawProps } from "@/components/atoms/pixelDraw";
 import { classnames } from "@/utils/classnames";
 import { ColorRGBA } from "@/models/ColorRBG";
 
@@ -15,7 +15,7 @@ export interface PixelGridProps{
   className?: string,
   pixelClassName?: string,
   selectedPixelClassName?: string,
-  PixelRender?:React.FC,
+  PixelRender?:React.FC<PixelDrawProps>,
   onPixelClick?: (point: Point) => void,
   onPixelMouseEnter?: (event: any, coords:Point) => void,
   onPixelMouseLeave?: (event: any, coords:Point) => void,
@@ -38,7 +38,7 @@ export const PixelGrid: React.FC<PixelGridProps> = ({
 
   const PixelComponent = useCallback((props:any) => {
     if (PixelRender) {
-      return <PixelRender {...props}></PixelRender>
+      return <PixelRender {...props}/>
     } else {
       return <PixelDraw {...props}/>
     }

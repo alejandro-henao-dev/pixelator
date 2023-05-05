@@ -1,4 +1,4 @@
-import { PixelDraw } from "@/components/atoms/pixelDraw"
+import { PixelDraw, PixelDrawProps } from "@/components/atoms/pixelDraw"
 import { Text } from "@/components/atoms/text"
 import { ColorRGBA } from "@/models/ColorRBG"
 import { Matrix } from "@/models/Matrix"
@@ -14,20 +14,16 @@ import styles from "./index.module.scss"
 
 export interface PixelPreviewProps{
   matrix: PixelMatrix,
-  onRight?: () => void,
-  onLeft?: () => void,
-  onUp?: () => void,
-  onDown?:()=>void,
   displayBorders?: boolean,
-  borderColor?:ColorRGBA
+  borderColor?: ColorRGBA,
+  PixelRender?:React.FC<PixelDrawProps>,
 }
 
 export const PixelPreview: React.FC<PixelPreviewProps> = ({
   matrix,
   displayBorders,
   borderColor,
-  onRight: onNext=()=>{},
-  onLeft: onPrev=()=>{}
+  PixelRender
 }) => {
 
   const centerPoint = new Point(Math.floor(matrix.size.width / 2), Math.floor(matrix.size.height / 2))
@@ -41,6 +37,7 @@ export const PixelPreview: React.FC<PixelPreviewProps> = ({
       selectedPixelClassName={styles.pixelCurrent}
       pixelClassName={styles.pixel}
       pixels={matrix}
+      PixelRender={PixelRender}
     />}
 
   </div>

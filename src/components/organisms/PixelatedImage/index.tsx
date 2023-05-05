@@ -1,3 +1,4 @@
+import { PixelDraw } from "@/components/atoms/pixelDraw"
 import { PixelGrid } from "@/components/molecules/PixelGrid"
 import { useHotKeysPixelNavigation } from "@/hooks/useHotKeysPixelNavigation"
 import { Point } from "@/models/Point"
@@ -43,6 +44,10 @@ export const PixelatedImage: React.FC = () => {
       displayBorders={drawGridBorders}
       selectedPixelClassName={styles.selectedPixel}
       selected={selected}
+
+      PixelRender={props => <PixelDraw
+        {...props}
+      />}
     /> 
 
     {popupOpen &&  <PopupPixelPreview onClose={onPopupClose } />}

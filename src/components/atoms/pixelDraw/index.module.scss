@@ -1,5 +1,6 @@
 .pixel{
   background-color: var(--pixel-color);
+  aspect-ratio: 1 / 1;
 
   &[data-empty="true"]{
     position: relative;

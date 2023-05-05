@@ -41,10 +41,18 @@ export const PopupPixelPreview:React.FC<PopupPixelPreview> = (props) => {
     <div className={styles.container} {...navigationBindings}>
 
       <nav className={styles.nav}>
-        <div className={styles.up} onClick={actions.moveUp}><CaretUpOutlined /></div>
-        <div className={styles.down} onClick={actions.moveDown}><CaretDownOutlined /></div>
-        <div className={styles.left} onClick={actions.moveLeft}><CaretLeftOutlined /></div>
-        <div className={styles.right} onClick={actions.moveRight}><CaretRightOutlined /></div>
+        <div className={styles.up} onClick={actions.moveUp}>
+          <CaretUpOutlined />
+        </div>
+        <div className={styles.down} onClick={actions.moveDown}>
+          <CaretDownOutlined />
+        </div>
+        <div className={styles.left} onClick={actions.moveLeft}>
+          <CaretLeftOutlined />
+        </div>
+        <div className={styles.right} onClick={actions.moveRight}>
+          <CaretRightOutlined />
+        </div>
       </nav>
 
       <header className={styles.header}>
@@ -56,7 +64,6 @@ export const PopupPixelPreview:React.FC<PopupPixelPreview> = (props) => {
             {' - '}
             Y: {selectedPixelCoords.y + 1} / {pixels.size.height}
           </Text>
-          
         </Title>
 
         <span className={classnames(
@@ -65,7 +72,6 @@ export const PopupPixelPreview:React.FC<PopupPixelPreview> = (props) => {
         )}>
           <CheckCircleOutlined />
         </span>
-        
       </header>
 
 
