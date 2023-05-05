@@ -1,4 +1,6 @@
 export enum DIRECTION{
-  horizontal='dir_h',
-  vertical='dir_v'
+  up="up",
+  down="down",
+  left="left",
+  right="right"
 }

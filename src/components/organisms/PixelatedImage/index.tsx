@@ -4,6 +4,7 @@ import { useHotKeysPixelNavigation } from "@/hooks/useHotKeysPixelNavigation"
 import { Point } from "@/models/Point"
 import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import { pixelatorStateActions } from "@/store/slices/pixelatorSlice"
+import { classnames } from "@/utils/classnames"
 import { useEffect, useState } from "react"
 import { PopupPixelPreview } from "../popupPixelPreview"
 import styles from "./index.module.scss"
@@ -12,6 +13,7 @@ export const PixelatedImage: React.FC = () => {
 
   const [popupOpen,setPopupOpen]=useState(false)
   const pixels = useAppSelector(store => store.pixelatorMode.pixels)
+  const donePixels = useAppSelector(store => store.pixelatorMode.donePixels)
   const active = useAppSelector(store => store.pixelatorMode.active)
   const selected = useAppSelector(store => store.pixelatorMode.selectedCoords)
   const drawGridBorders=useAppSelector(store=>store.pixelatorMode.drawGridBorders)
@@ -25,6 +27,9 @@ export const PixelatedImage: React.FC = () => {
     }
   },[selected])
 
+  useEffect(() => {
+    console.log(donePixels)
+  },[donePixels])
 
   const onPixelClick = (point: Point) => {
     dispatch(pixelatorStateActions.setSelectedPixel(point))
@@ -47,6 +52,7 @@ export const PixelatedImage: React.FC = () => {
 
       PixelRender={props => <PixelDraw
         {...props}
+        // active={!Boolean(donePixels[props.pixel.coords?.getHash() ?? ''])}
       />}
     /> 
 

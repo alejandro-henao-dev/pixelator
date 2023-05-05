@@ -7,18 +7,21 @@ import { Matrix } from "@/models/Matrix"
 import { Pixel } from "@/models/Pixel"
 import { PixelMatrix } from "@/models/PixelMatrix"
 import { Point } from "@/models/Point"
-import { useAppSelector } from "@/store/hooks"
+import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import { classnames } from "@/utils/classnames"
 import { CaretDownOutlined, CaretLeftOutlined, CaretRightOutlined, CaretUpOutlined, CheckCircleOutlined } from "@ant-design/icons"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import styles from "./index.module.scss"
 import { usePixelNavigationActions } from "@/hooks/usePixelNavigationActions"
 import { useGesturePixelNavigation } from "@/hooks/useGesturePixelNavigation"
+import { useDoubleClick } from "@/hooks/useDoubleClick"
+import { pixelatorStateActions } from "@/store/slices/pixelatorSlice"
 
 export interface PopupPixelPreview extends PopupProps{}
 
 export const PopupPixelPreview:React.FC<PopupPixelPreview> = (props) => {
  
+  const dispatch=useAppDispatch()
   const selectedPixelCoords = useAppSelector(store=>store.pixelatorMode.selectedCoords)
   const pixels = useAppSelector(store => store.pixelatorMode.pixels)
   
@@ -37,8 +40,19 @@ export const PopupPixelPreview:React.FC<PopupPixelPreview> = (props) => {
     setSelectedSubgrid(subgrid)
   }, [selectedPixelCoords, pixels])
 
+
+  const doubleClickRefContainer=useRef(null)
+  useDoubleClick(doubleClickRefContainer, () => {
+    if (!selectedPixelCoords) {
+      return
+    }
+    dispatch(pixelatorStateActions.addDonePixel(selectedPixelCoords))
+  })
+
   return selectedSubgrid && selectedPixelCoords && pixels ? <Popup {...props}>
-    <div className={styles.container} {...navigationBindings}>
+    <div className={styles.container} {...navigationBindings}
+      ref={doubleClickRefContainer}
+    >
 
       <nav className={styles.nav}>
         <div className={styles.up} onClick={actions.moveUp}>

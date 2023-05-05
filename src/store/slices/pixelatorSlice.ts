@@ -14,6 +14,7 @@ interface PixelatorState {
   },
   active:boolean,
   pixels?: PixelMatrix,
+  donePixels:Record<string,Point>
   generated: boolean,
   selectedCoords: Point | null,
   drawGridBorders:boolean
@@ -28,7 +29,8 @@ const initialState: PixelatorState = {
   pixels: undefined,
   generated: false,
   selectedCoords: null,
-  drawGridBorders:false
+  drawGridBorders: false,
+  donePixels:{}
 }
 
 export const PixelatorSlice = createSlice({
@@ -53,6 +55,13 @@ export const PixelatorSlice = createSlice({
 
     setDrawGridBorders: (state, action: PayloadAction<boolean>) => {
       state.drawGridBorders=action.payload
+    },
+
+    addDonePixel: (state, action: PayloadAction<Point>) => {
+      state.donePixels = {
+        ...state.donePixels,
+        [action.payload.getHash()]:action.payload
+      }
     }
   },
 })

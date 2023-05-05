@@ -4,11 +4,12 @@ import styles from './index.module.scss'
 
 export interface PixelDrawProps{
   pixel: Pixel,
+  active?:boolean,
   className?: string,
-  cssVars?: Record<string,string>
+  cssVars?: Record<string,string>,
   onClick?: (e:any) => void,
-  onMouseEnter?: (e: any) => void
-  onMouseLeave?: (e:any)=>void
+  onMouseEnter?: (e: any) => void,
+  onMouseLeave?: (e:any)=>void,
 }
 export const PixelDraw: React.FC<PixelDrawProps> = ({
   pixel,
@@ -16,7 +17,8 @@ export const PixelDraw: React.FC<PixelDrawProps> = ({
   onClick = () => { },
   onMouseEnter = () => { },
   onMouseLeave = () => { },
-  cssVars
+  cssVars,
+  active
 }) => { 
 
 
@@ -29,6 +31,6 @@ export const PixelDraw: React.FC<PixelDrawProps> = ({
     data-empty={pixel.empty}
     onMouseEnter={onMouseEnter}
     onMouseLeave={onMouseLeave}
-    className={classnames(styles.pixel, className)}
+    className={classnames(styles.pixel, className, !active && styles.pixelOff)}
   />
 }
