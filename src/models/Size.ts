@@ -1,6 +1,7 @@
-export class Size{
-  constructor(
-    public width: number,  
-    public height: number
-  ){}
+
+
+
+export interface ISize{
+  width: number,
+  height:number
 }

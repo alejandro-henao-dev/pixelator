@@ -1,30 +1,30 @@
 import React, { useCallback, useState } from "react";
-import { Matrix } from "@/models/Matrix";
-import { Pixel } from "@/models/Pixel";
-import { Point } from "@/models/Point";
+import { IPixel } from "@/models/Pixel";
+import { IPoint, pointEqualTo, pointToString } from "@/models/Point";
 import styles from "./index.module.scss"
 import { PixelDraw, PixelDrawProps } from "@/components/atoms/pixelDraw";
 import { classnames } from "@/utils/classnames";
-import { ColorRGBA } from "@/models/ColorRBG";
+import { getColorRGBACssFormat, IColorRGBA } from "@/models/ColorRBG";
+import { IPixelMatrix } from "@/models/PixelMatrix";
 
 export interface PixelGridProps{
-  pixels: Matrix<Pixel>,
-  selected?: Point | null,
+  pixels: IPixelMatrix,
+  selected?: IPoint | null,
   displayBorders?: boolean,
-  borderColor?: ColorRGBA,
+  borderColor?: IColorRGBA,
   className?: string,
   pixelClassName?: string,
   selectedPixelClassName?: string,
   PixelRender?:React.FC<PixelDrawProps>,
-  onPixelClick?: (point: Point) => void,
-  onPixelMouseEnter?: (event: any, coords:Point) => void,
-  onPixelMouseLeave?: (event: any, coords:Point) => void,
+  onPixelClick?: (point: IPoint) => void,
+  onPixelMouseEnter?: (event: any, coords:IPoint) => void,
+  onPixelMouseLeave?: (event: any, coords:IPoint) => void,
 }
 
 export const PixelGrid: React.FC<PixelGridProps> = ({
   pixels,
   displayBorders,
-  borderColor= new ColorRGBA(0,0,0),
+  borderColor= {r:0,g:0,b:0,a:1},
   selected,
   pixelClassName,
   className,
@@ -46,26 +46,26 @@ export const PixelGrid: React.FC<PixelGridProps> = ({
 
   return <>
     <div className={classnames(styles.imgGrid, className)}>
-    {pixels.cells.map((row, y) => {
+    {pixels.map((row:any, y:number) => {
       return <div className={styles.row} key={`row - ${y}`}>
-        {row.map((pixel, x) => {
-          const currentCoords=new Point(x, y)
+        {row.map((pixel:any, x:number) => {
+          const currentCoords:IPoint={x,y}
           return <>
             <PixelComponent
               cssVars={{
-                '--border-color':borderColor.getCssFormat()
+                '--border-color':getColorRGBACssFormat(borderColor)
               }}
               pixel={pixel}
-              key={`${y} - ${x}`}
+              key={pointToString(currentCoords)}
               className={classnames(
                 styles.cell,
                 pixelClassName,
                 displayBorders && styles.borders,
-                selected?.equalTo(currentCoords) && selectedPixelClassName
+                selected && pointEqualTo(selected,currentCoords) && selectedPixelClassName
               )}
               onMouseEnter={(e:any)=>onPixelMouseEnter(e,currentCoords)}
               onMouseLeave={(e:any)=>onPixelMouseLeave(e,currentCoords)}
-              onClick={()=>onClick(new Point(x, y))}
+              onClick={()=>onClick(currentCoords)}
             />
           </>
         })}

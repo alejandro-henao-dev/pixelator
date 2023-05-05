@@ -1,9 +1,10 @@
-import { Pixel } from "@/models/Pixel"
+import { getColorRGBACssFormat } from "@/models/ColorRBG"
+import { IPixel } from "@/models/Pixel"
 import { classnames } from "@/utils/classnames"
 import styles from './index.module.scss'
 
 export interface PixelDrawProps{
-  pixel: Pixel,
+  pixel: IPixel,
   active?:boolean,
   className?: string,
   cssVars?: Record<string,string>,
@@ -24,7 +25,7 @@ export const PixelDraw: React.FC<PixelDrawProps> = ({
 
   return <div
     style={{
-      ['--pixel-color' as any]: pixel.color.getCssFormat(),
+      ['--pixel-color' as any]: getColorRGBACssFormat(pixel.color),
       ...cssVars
     }}
     onClick={onClick}

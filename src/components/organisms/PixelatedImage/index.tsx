@@ -1,7 +1,7 @@
 import { PixelDraw } from "@/components/atoms/pixelDraw"
 import { PixelGrid } from "@/components/molecules/PixelGrid"
 import { useHotKeysPixelNavigation } from "@/hooks/useHotKeysPixelNavigation"
-import { Point } from "@/models/Point"
+import { IPoint } from "@/models/Point"
 import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import { pixelatorStateActions } from "@/store/slices/pixelatorSlice"
 import { classnames } from "@/utils/classnames"
@@ -31,7 +31,7 @@ export const PixelatedImage: React.FC = () => {
     console.log(donePixels)
   },[donePixels])
 
-  const onPixelClick = (point: Point) => {
+  const onPixelClick = (point: IPoint) => {
     dispatch(pixelatorStateActions.setSelectedPixel(point))
     
   }
@@ -52,6 +52,7 @@ export const PixelatedImage: React.FC = () => {
 
       PixelRender={props => <PixelDraw
         {...props}
+        active={true}
         // active={!Boolean(donePixels[props.pixel.coords?.getHash() ?? ''])}
       />}
     /> 

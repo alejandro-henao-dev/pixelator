@@ -1,8 +1,8 @@
 import { DIRECTION } from "@/constants/directions";
+import { ORIENTATIONS } from "@/constants/orientations";
 
-export class ShapeSide{
-  constructor(
-    public direction: DIRECTION,
-    public length: number,
-  ){}
+
+export interface IShapeSide{
+  orientation: ORIENTATIONS,
+  length: number,
 }

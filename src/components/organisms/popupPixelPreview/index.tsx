@@ -2,11 +2,8 @@ import { Text } from "@/components/atoms/text"
 import { Title } from "@/components/atoms/title"
 import { PixelPreview } from "@/components/molecules/pixelPreview"
 import { Popup, PopupProps } from "@/components/molecules/popup"
-import { ColorRGBA } from "@/models/ColorRBG"
-import { Matrix } from "@/models/Matrix"
-import { Pixel } from "@/models/Pixel"
-import { PixelMatrix } from "@/models/PixelMatrix"
-import { Point } from "@/models/Point"
+import { IColorRGBA } from "@/models/ColorRBG"
+import { getMatrixCellSorounding } from "@/models/Matrix"
 import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import { classnames } from "@/utils/classnames"
 import { CaretDownOutlined, CaretLeftOutlined, CaretRightOutlined, CaretUpOutlined, CheckCircleOutlined } from "@ant-design/icons"
@@ -16,6 +13,8 @@ import { usePixelNavigationActions } from "@/hooks/usePixelNavigationActions"
 import { useGesturePixelNavigation } from "@/hooks/useGesturePixelNavigation"
 import { useDoubleClick } from "@/hooks/useDoubleClick"
 import { pixelatorStateActions } from "@/store/slices/pixelatorSlice"
+import { IPixel } from "@/models/Pixel"
+import { IPixelMatrix } from "@/models/PixelMatrix"
 
 export interface PopupPixelPreview extends PopupProps{}
 
@@ -26,7 +25,7 @@ export const PopupPixelPreview:React.FC<PopupPixelPreview> = (props) => {
   const pixels = useAppSelector(store => store.pixelatorMode.pixels)
   
   
-  const [selectedSubgrid, setSelectedSubgrid] = useState<PixelMatrix | null>(null)
+  const [selectedSubgrid, setSelectedSubgrid] = useState<IPixelMatrix | null>(null)
   const [message, setMessage] = useState('')
   
   const navigationBindings = useGesturePixelNavigation(setMessage)
@@ -36,7 +35,14 @@ export const PopupPixelPreview:React.FC<PopupPixelPreview> = (props) => {
     if (!selectedPixelCoords || !pixels) {
       return
     }
-    const subgrid = pixels.getSoroundingMatrix(selectedPixelCoords)
+    const emptyPixel:IPixel = {
+      color: { r: 255, g: 255, b: 255, a: 0 },
+      empty:true
+    }
+    const subgrid = getMatrixCellSorounding(pixels, selectedPixelCoords, {
+      threshold:1,
+      emptyCell:emptyPixel
+    })
     setSelectedSubgrid(subgrid)
   }, [selectedPixelCoords, pixels])
 
@@ -48,6 +54,8 @@ export const PopupPixelPreview:React.FC<PopupPixelPreview> = (props) => {
     }
     dispatch(pixelatorStateActions.addDonePixel(selectedPixelCoords))
   })
+
+  const borderColor:IColorRGBA={r:0,g:0,b:0,a:0.3}
 
   return selectedSubgrid && selectedPixelCoords && pixels ? <Popup {...props}>
     <div className={styles.container} {...navigationBindings}
@@ -74,9 +82,9 @@ export const PopupPixelPreview:React.FC<PopupPixelPreview> = (props) => {
           Coords:
           {' '}
           <Text as="span">
-            X: {selectedPixelCoords.x + 1} / {pixels.size.width}
+            X: {selectedPixelCoords.x + 1}
             {' - '}
-            Y: {selectedPixelCoords.y + 1} / {pixels.size.height}
+            Y: {selectedPixelCoords.y + 1}
           </Text>
         </Title>
 
@@ -91,7 +99,7 @@ export const PopupPixelPreview:React.FC<PopupPixelPreview> = (props) => {
 
       <PixelPreview
         displayBorders
-        borderColor={new ColorRGBA(0,0,0,0.3)}
+        borderColor={borderColor}
         matrix={selectedSubgrid}
       />
 

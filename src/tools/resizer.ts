@@ -1,44 +1,45 @@
 import { DIRECTION } from "@/constants/directions";
-import { ShapeSide } from "@/models/ShapeSide";
-import { Size } from "@/models/Size";
+import { ORIENTATIONS } from "@/constants/orientations";
+import { IShapeSide } from "@/models/ShapeSide";
+import { ISize } from "@/models/Size";
 
-export class Resizer{
+export function resizeByWidth(size:ISize,width: number): ISize {
+  const calculatedHeight=width * size.height / size.width
+  return { width, height:calculatedHeight }
+}
 
-  private size: Size;
+export function resizeByHeight(size:ISize,height: number): ISize {
+  const calculatedWidth = height * size.width / size.height
+  return {
+    width: calculatedWidth,
+    height:height
+  }
+}
 
-  constructor(size: Size) {
-    this.size=size
+export function resizeByMaxSide(size:ISize, maxLength:number): ISize {
+  const longerSide = getLongerSide(size)
+
+  if (longerSide.orientation == ORIENTATIONS.horizontal) {
+    return resizeByWidth(size,maxLength)
+  }
+
+  if (longerSide.orientation == ORIENTATIONS.vertical) {
+    return resizeByHeight(size,maxLength)  
   }
   
-  resizeByWidth(width: number): Size {
-    const calculatedHeight=width * this.size.height / this.size.width
-    return new Size(width, calculatedHeight)
+  throw new Error("ResizeMath: Could not find the longer side of the size")
+ }
+
+
+function getLongerSide(size: ISize): IShapeSide{
+  if (size.width > size.height) {
+    return {
+      orientation: ORIENTATIONS.horizontal,
+      length:size.width
+    }
   }
-
-  resizeByHeight(height: number): Size {
-    const calculatedWidth = height * this.size.width / this.size.height
-    return new Size(calculatedWidth,height)
-  }
-
-  resizeByMaxSide(maxLength:number): Size {
-    const longerSide = this.getLongerSide(this.size)
-
-    if (longerSide.direction == DIRECTION.horizontal) {
-      return this.resizeByWidth(maxLength)
-    }
-
-    if (longerSide.direction == DIRECTION.vertical) {
-      return this.resizeByHeight(maxLength)  
-    }
-    
-    throw new Error("ResizeMath: Could not find the longer side of the size")
-   }
-  
-
-  private getLongerSide(size: Size): ShapeSide{
-    if (size.width > size.height) {
-      return new ShapeSide(DIRECTION.horizontal,size.width)  
-    }
-    return new ShapeSide(DIRECTION.vertical,size.height)
+  return  {
+    orientation: ORIENTATIONS.vertical,
+    length:size.height
   }
 }

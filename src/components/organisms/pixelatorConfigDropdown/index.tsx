@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { pixelatorStateActions } from "@/store/slices/pixelatorSlice";
 import { Input, INPUT_VARIANT } from "@/components/atoms/input";
 import { Button, BUTTON_TYPES } from "@/components/atoms/button";
-import { Pixelator } from "@/tools/pixelator";
+import { pixelateImage } from "@/tools/pixelator";
 
 import dynamic from 'next/dynamic'
 
@@ -40,9 +40,8 @@ export const PixelatorConfigDropdown: React.FC<PixelatorConfigDropdownProps> = (
     if (!imageURL) {
       return
     }
-    const pixelator = new Pixelator(imageURL)
 
-    const pixelMatrix = await pixelator.pixelate(config.pixelSize)
+    const pixelMatrix = await pixelateImage(imageURL,config.pixelSize)
     dispatch(pixelatorStateActions.setPixels(pixelMatrix))
   }
   
@@ -93,7 +92,7 @@ export const PixelatorConfigDropdown: React.FC<PixelatorConfigDropdownProps> = (
               relativeSize >Grid size: </Text>
 
               <Text as="span" size={TEXT_SIZE.small} className={styles.fieldValue}>
-                {`W: ${pixels?.size.width} - H: ${pixels?.size.height}`}
+                {/* {`W: ${pixels?.size.width} - H: ${pixels?.size.height}`} */}
               </Text>
             </li>
           </ul>

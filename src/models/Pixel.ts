@@ -1,10 +1,8 @@
-import { ColorRGBA } from "./ColorRBG";
-import { Point } from "./Point";
+import {  IColorRGBA } from "./ColorRBG";
+import { IPoint } from "./Point";
 
-export class Pixel{
-  constructor(
-    public color: ColorRGBA,
-    public coords?: Point | null,
-    public empty?: boolean
-  ){}
+export interface IPixel{
+  color: IColorRGBA,
+  coords?: IPoint | null,
+  empty?: boolean
 }

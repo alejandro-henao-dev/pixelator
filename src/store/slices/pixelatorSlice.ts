@@ -1,10 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import type { RootState } from '@/store'
-import { Pixel } from '@/models/Pixel'
-import { Matrix } from '@/models/Matrix'
-import { type } from 'os'
-import { Point } from '@/models/Point'
-import { PixelMatrix } from '@/models/PixelMatrix'
+import { IPoint, pointToString } from '@/models/Point'
+import { IPixelMatrix } from '@/models/PixelMatrix'
 
 
 interface PixelatorState {
@@ -12,11 +8,12 @@ interface PixelatorState {
   config: {
     pixelSize: number,
   },
+  
   active:boolean,
-  pixels?: PixelMatrix,
-  donePixels:Record<string,Point>
+  pixels?: IPixelMatrix,
+  donePixels:Record<string,IPoint>
   generated: boolean,
-  selectedCoords: Point | null,
+  selectedCoords: IPoint | null,
   drawGridBorders:boolean
 }
 
@@ -44,12 +41,12 @@ export const PixelatorSlice = createSlice({
       state.config.pixelSize=action.payload
     },
 
-    setPixels: (state, action: PayloadAction<PixelMatrix>) => {
+    setPixels: (state, action: PayloadAction<IPixelMatrix>) => {
       state.pixels = action.payload
       state.generated=true
     },
 
-    setSelectedPixel: (state, action: PayloadAction<Point | null>) => {
+    setSelectedPixel: (state, action: PayloadAction<IPoint | null>) => {
       state.selectedCoords=action.payload
     },
 
@@ -57,10 +54,10 @@ export const PixelatorSlice = createSlice({
       state.drawGridBorders=action.payload
     },
 
-    addDonePixel: (state, action: PayloadAction<Point>) => {
+    addDonePixel: (state, action: PayloadAction<IPoint>) => {
       state.donePixels = {
         ...state.donePixels,
-        [action.payload.getHash()]:action.payload
+        [pointToString(action.payload)]:action.payload
       }
     }
   },

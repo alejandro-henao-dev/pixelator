@@ -3,7 +3,7 @@ import { pixelatorStateActions } from "@/store/slices/pixelatorSlice"
 
 import { PIXEL_NAVIGATION_ERRORR } from "@/constants/pixelNavigationErrors"
 import { useCallback } from "react"
-import { Point } from "@/models/Point"
+import { IPoint } from "@/models/Point"
 import { pixelNavigationErrorEvent } from "@/models/pixelNavigationErrorEvent"
 
 export const usePixelNavigationActions = (
@@ -19,7 +19,10 @@ export const usePixelNavigationActions = (
     }    
     if (selectedPixelCoords.x + 1 < pixels.size.width) {
       onError(PIXEL_NAVIGATION_ERRORR.noError)
-      const newCoords = new Point(selectedPixelCoords.x + 1, selectedPixelCoords.y)
+      const newCoords:IPoint = {
+        x: selectedPixelCoords.x + 1,
+        y: selectedPixelCoords.y
+      }
       dispatch(pixelatorStateActions.setSelectedPixel(newCoords))  
       
     } else {
@@ -34,7 +37,10 @@ export const usePixelNavigationActions = (
     }    
     if (selectedPixelCoords.x - 1 >= 0) {
       onError(PIXEL_NAVIGATION_ERRORR.noError)
-      const newCoords = new Point(selectedPixelCoords.x - 1, selectedPixelCoords.y)
+      const newCoords: IPoint ={
+        x: selectedPixelCoords.x - 1,
+        y: selectedPixelCoords.y
+      }
       dispatch(pixelatorStateActions.setSelectedPixel(newCoords))
       
     } else {
@@ -48,7 +54,11 @@ export const usePixelNavigationActions = (
     }    
     if (selectedPixelCoords.y - 1 >= 0) {
       onError(PIXEL_NAVIGATION_ERRORR.noError)
-      const newCoords = new Point(selectedPixelCoords.x, selectedPixelCoords.y - 1)
+      const newCoords:IPoint ={
+        x: selectedPixelCoords.x,
+        y: selectedPixelCoords.y - 1
+      }
+
       dispatch(pixelatorStateActions.setSelectedPixel(newCoords))
       
     } else {
@@ -62,7 +72,10 @@ export const usePixelNavigationActions = (
     }    
     if (selectedPixelCoords.y + 1 < pixels.size.height) {
       onError(PIXEL_NAVIGATION_ERRORR.noError)
-      const newCoords = new Point(selectedPixelCoords.x, selectedPixelCoords.y + 1)
+      const newCoords: IPoint = {
+        x: selectedPixelCoords.x ,
+        y: selectedPixelCoords.y + 1
+      }
       dispatch(pixelatorStateActions.setSelectedPixel(newCoords))  
       
     } else {
