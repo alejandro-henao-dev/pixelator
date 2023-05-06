@@ -19,7 +19,7 @@ export const PixelDraw: React.FC<PixelDrawProps> = ({
   onMouseEnter = () => { },
   onMouseLeave = () => { },
   cssVars,
-  active
+  active=true
 }) => { 
 
 

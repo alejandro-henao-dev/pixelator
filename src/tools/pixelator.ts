@@ -65,7 +65,7 @@ const pixelate = (p5:P5, size:ISize):IPixelMatrix =>{
     for (let x = 0; x < p5.width; x += size.width) {
       const currentCoord:IPoint={x,y}
       let color = getAreaAverageColor(p5, currentCoord, size);
-      const pixel:IPixel={color,coords:{x,y},empty:false}
+      const pixel:IPixel={color,coords:{x:x/size.width,y:y/size.height},empty:false}
       pixels.at(-1)?.push(pixel)
     }
   }

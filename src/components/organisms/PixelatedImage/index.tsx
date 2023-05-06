@@ -1,7 +1,7 @@
 import { PixelDraw } from "@/components/atoms/pixelDraw"
 import { PixelGrid } from "@/components/molecules/PixelGrid"
 import { useHotKeysPixelNavigation } from "@/hooks/useHotKeysPixelNavigation"
-import { IPoint } from "@/models/Point"
+import { IPoint, pointToString } from "@/models/Point"
 import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import { pixelatorStateActions } from "@/store/slices/pixelatorSlice"
 import { classnames } from "@/utils/classnames"
@@ -39,7 +39,6 @@ export const PixelatedImage: React.FC = () => {
 
   const onPopupClose = () => {
     setPopupOpen(false)
-    // dispatch(pixelatorStateActions.setSelectedPixel(null))
   }
 
   return pixels && active ? <>
@@ -50,11 +49,19 @@ export const PixelatedImage: React.FC = () => {
       selectedPixelClassName={styles.selectedPixel}
       selected={selected}
 
-      PixelRender={props => <PixelDraw
+      PixelRender={props => {
+        const active=props.pixel.coords
+        ? !Boolean(donePixels[pointToString(props.pixel.coords)])
+          : true
+        
+          // console.log("active", props.pixel.coords,pointToString(props.pixel.coords as IPoint),donePixels[pointToString(props.pixel.coords as IPoint)],donePixels)  
+      
+        
+        return  <PixelDraw
         {...props}
-        active={true}
-        // active={!Boolean(donePixels[props.pixel.coords?.getHash() ?? ''])}
-      />}
+        active={active}
+      />
+      }}
     /> 
 
     {popupOpen &&  <PopupPixelPreview onClose={onPopupClose } />}
