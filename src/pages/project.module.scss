@@ -8,12 +8,14 @@
   min-height: calc(100vh );
 }
 .header{
-  display: flex;
-  gap:1rem;
-  align-items: flex-end;
-  input{
-    font-size: 1.5rem;
-  }
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: solid 3px var(--background-color-light);
+}
+
+.menu{
+  font-size: 2rem;
+  cursor: pointer;
 }
 
 
@@ -28,15 +30,60 @@
 
 
 .workspace{
+
   display: grid;
-  grid-template-columns: 1fr 200px; 
   height: 100%;
   gap:1rem;
+  @media screen and (min-width:768px) {
+    grid-template-columns: 1fr 200px; 
+  }
   
+  
+}
+
+@media screen and (min-width:768px){
+  .closeSidebar{
+    display:  none;
+  }
+
+  .header{
+    display:none
+  }
 }
 
 .sidebar{
   display: flex;
   flex-direction: column;
-  // gap:5px;
+
+  @media screen and (max-width:768px) {
+    background-color: var(--background-color-light);
+    position: fixed;
+    top:0;
+    bottom:0;
+    height: 100vh;
+    border-right: solid 3px  var(--background-color-light);
+    max-width: 100vh;
+    width: max-content;
+
+    &.open{
+      left:0;
+      z-index: 1000;
+    }
+    &.close{
+      right:100%;
+      
+    }
+
+    .closeSidebar{
+      font-size: 4rem;
+      position: fixed;
+      bottom:2rem;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+
+    }
+  }
 }
+
+

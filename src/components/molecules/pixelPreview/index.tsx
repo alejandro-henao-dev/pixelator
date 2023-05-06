@@ -13,14 +13,16 @@ export interface PixelPreviewProps{
   matrix: IPixelMatrix,
   displayBorders?: boolean,
   borderColor?: IColorRGBA,
-  PixelRender?:React.FC<PixelDrawProps>,
+  PixelRender?: React.FC<PixelDrawProps>,
+  className?:string
 }
 
 export const PixelPreview: React.FC<PixelPreviewProps> = ({
   matrix,
   displayBorders,
   borderColor,
-  PixelRender
+  PixelRender,
+  className
 }) => {
 
   const matrixSize=getMatrixSize(matrix)
@@ -29,7 +31,7 @@ export const PixelPreview: React.FC<PixelPreviewProps> = ({
     y:  Math.floor(matrixSize.height / 2)
   }
   
-  return < div className={styles.container}>
+  return < div className={classnames(styles.container,className)}>
     {<PixelGrid
       displayBorders={displayBorders}
       borderColor={borderColor}

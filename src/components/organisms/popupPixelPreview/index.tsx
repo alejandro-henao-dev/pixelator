@@ -6,7 +6,7 @@ import { IColorRGBA } from "@/models/ColorRBG"
 import { getMatrixCellSorounding } from "@/models/Matrix"
 import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import { classnames } from "@/utils/classnames"
-import { CaretDownOutlined, CaretLeftOutlined, CaretRightOutlined, CaretUpOutlined, CheckCircleOutlined } from "@ant-design/icons"
+import { CaretDownOutlined, CaretLeftOutlined, CaretRightOutlined, CaretUpOutlined, CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons"
 import { useCallback, useEffect, useRef, useState } from "react"
 import styles from "./index.module.scss"
 import { usePixelNavigationActions } from "@/hooks/usePixelNavigationActions"
@@ -83,37 +83,47 @@ export const PopupPixelPreview:React.FC<PopupPixelPreview> = (props) => {
       </nav>
 
       <header className={styles.header}>
-        <Title>
-          Coords:
-          {' '}
-          <Text as="span">
-            X: {selectedPixelCoords.x + 1}
-            {' - '}
-            Y: {selectedPixelCoords.y + 1}
-          </Text>
-        </Title>
+       
+        <div className={styles.title}>
+          <Title>
+            Coords:
+            {' '}
+            <Text as="span">
+              X: {selectedPixelCoords.x + 1}
+              {' - '}
+              Y: {selectedPixelCoords.y + 1}
+            </Text>
+          </Title>
 
-        <span
-          onClick={toggleDonePixel}
-          className={classnames(
-            styles.doneIcon,
-            donePixels[pointToString(selectedPixelCoords)] && styles.isDone
-          )}
-        >
-          <CheckCircleOutlined />
-        </span>
+          <span
+            onClick={toggleDonePixel}
+            className={classnames(
+              styles.doneIcon,
+              donePixels[pointToString(selectedPixelCoords)] && styles.isDone
+            )}
+          >
+            <CheckCircleOutlined />
+          </span>
+       </div>
       </header>
 
 
+      
       <PixelPreview
+        className={styles.pixelPreview}
         displayBorders
         borderColor={borderColor}
         matrix={selectedSubgrid}
       />
 
-      <Text>
-        {message}
-      </Text>
+      <span 
+        className={classnames(
+          styles.closeIcon,
+        )}
+        onClick={props.onClose}
+      >
+        <CloseCircleOutlined />
+      </span>
       
     </div>
   </Popup>

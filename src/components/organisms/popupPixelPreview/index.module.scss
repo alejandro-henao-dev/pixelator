@@ -2,23 +2,46 @@
 $container-padding:2rem;
 
 .container{
+  max-height: calc(100vh - 2rem);
+  // overflow: hidden;
   background-color: var(--background-color);
   padding:$container-padding;
   box-shadow: 0 5px 10px 0px rgba(0,0,0,0.57);
   position: relative;
+  touch-action:none;
+  @media screen and (min-width:768px) {
+    padding-bottom: 1rem;
+  }
+}
+
+
+.pixelPreview{
+  max-width: 80vw;
+  overflow: auto;
+}
+.closeIcon{
+  display: block;
+  text-align: center;
+  font-size: 2.5rem;
+  margin-top:1rem;
+  cursor: pointer;
 }
 
 .header{
-  display: flex;
-  flex-direction: row;
-  gap:1rem;
-  justify-content: center;
-  margin-bottom:$container-padding;
-  max-width: 100%;
-  align-items: center;
-  h1{
-    width: 100%;
+
+  .title{
+    display: flex;
+    flex-direction: row;
+    gap:1rem;
+    justify-content: center;
+    margin-bottom:$container-padding;
+    max-width: 100%;
+    align-items: center;
+    h1{
+      width: 100%;
+    }
   }
+  
 }
 
 
