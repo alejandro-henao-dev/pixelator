@@ -25,6 +25,7 @@ export const PopupPixelPreview:React.FC<PopupPixelPreview> = (props) => {
   const selectedPixelCoords = useAppSelector(store=>store.pixelatorMode.selectedCoords)
   const pixels = useAppSelector(store => store.pixelatorMode.pixels)
   const donePixels=useAppSelector(store => store.pixelatorMode.donePixels)
+  const matrixSize = useAppSelector(state => state.pixelatorMode.matrixSize)
   
   const [selectedSubgrid, setSelectedSubgrid] = useState<IPixelMatrix | null>(null)
   const [message, setMessage] = useState('')
@@ -89,9 +90,9 @@ export const PopupPixelPreview:React.FC<PopupPixelPreview> = (props) => {
             Coords:
             {' '}
             <Text as="span">
-              X: {selectedPixelCoords.x + 1}
+              X: {selectedPixelCoords.x + 1} / {matrixSize?.width}
               {' - '}
-              Y: {selectedPixelCoords.y + 1}
+              Y: {selectedPixelCoords.y + 1} / {matrixSize?.height}
             </Text>
           </Title>
 

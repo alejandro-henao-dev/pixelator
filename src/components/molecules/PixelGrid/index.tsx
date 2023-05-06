@@ -47,7 +47,7 @@ export const PixelGrid: React.FC<PixelGridProps> = ({
   return <>
     <div className={classnames(styles.imgGrid, className)}>
     {pixels.map((row:any, y:number) => {
-      return <div className={styles.row} key={`row - ${y}`}>
+      return <div className={styles.row} key={crypto.randomUUID()}>
         {row.map((pixel:any, x:number) => {
           const currentCoords:IPoint={x,y}
           return <>
@@ -56,7 +56,7 @@ export const PixelGrid: React.FC<PixelGridProps> = ({
                 '--border-color':getColorRGBACssFormat(borderColor)
               }}
               pixel={pixel}
-              key={pointToString(currentCoords)}
+              key={crypto.randomUUID()}
               className={classnames(
                 styles.cell,
                 pixelClassName,
