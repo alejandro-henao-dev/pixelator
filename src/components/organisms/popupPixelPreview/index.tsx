@@ -7,7 +7,7 @@ import { getMatrixCellSorounding } from "@/models/Matrix"
 import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import { classnames } from "@/utils/classnames"
 import { CaretDownOutlined, CaretLeftOutlined, CaretRightOutlined, CaretUpOutlined, CheckCircleOutlined } from "@ant-design/icons"
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import styles from "./index.module.scss"
 import { usePixelNavigationActions } from "@/hooks/usePixelNavigationActions"
 import { useGesturePixelNavigation } from "@/hooks/useGesturePixelNavigation"
@@ -15,6 +15,7 @@ import { useDoubleClick } from "@/hooks/useDoubleClick"
 import { pixelatorStateActions } from "@/store/slices/pixelatorSlice"
 import { IPixel } from "@/models/Pixel"
 import { IPixelMatrix } from "@/models/PixelMatrix"
+import { pointToString } from "@/models/Point"
 
 export interface PopupPixelPreview extends PopupProps{}
 
@@ -23,7 +24,7 @@ export const PopupPixelPreview:React.FC<PopupPixelPreview> = (props) => {
   const dispatch=useAppDispatch()
   const selectedPixelCoords = useAppSelector(store=>store.pixelatorMode.selectedCoords)
   const pixels = useAppSelector(store => store.pixelatorMode.pixels)
-  
+  const donePixels=useAppSelector(store => store.pixelatorMode.donePixels)
   
   const [selectedSubgrid, setSelectedSubgrid] = useState<IPixelMatrix | null>(null)
   const [message, setMessage] = useState('')
@@ -47,12 +48,16 @@ export const PopupPixelPreview:React.FC<PopupPixelPreview> = (props) => {
   }, [selectedPixelCoords, pixels])
 
 
-  const doubleClickRefContainer=useRef(null)
-  useDoubleClick(doubleClickRefContainer, () => {
+  const toggleDonePixel = useCallback(() => {
     if (!selectedPixelCoords) {
       return
     }
-    dispatch(pixelatorStateActions.addDonePixel(selectedPixelCoords))
+    dispatch(pixelatorStateActions.toggleDonePixel(selectedPixelCoords))
+  }, [selectedPixelCoords, dispatch])
+  
+  const doubleClickRefContainer=useRef(null)
+  useDoubleClick(doubleClickRefContainer, () => {
+    toggleDonePixel()
   })
 
   const borderColor:IColorRGBA={r:0,g:0,b:0,a:0.3}
@@ -88,10 +93,13 @@ export const PopupPixelPreview:React.FC<PopupPixelPreview> = (props) => {
           </Text>
         </Title>
 
-        <span className={classnames(
-          styles.doneIcon,
-          // styles.isDone
-        )}>
+        <span
+          onClick={toggleDonePixel}
+          className={classnames(
+            styles.doneIcon,
+            donePixels[pointToString(selectedPixelCoords)] && styles.isDone
+          )}
+        >
           <CheckCircleOutlined />
         </span>
       </header>

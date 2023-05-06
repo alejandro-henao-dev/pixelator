@@ -12,12 +12,13 @@ export const usePixelNavigationActions = (
   const dispatch=useAppDispatch()
   const selectedPixelCoords = useAppSelector(store => store.pixelatorMode.selectedCoords)
   const pixels = useAppSelector(store => store.pixelatorMode.pixels)
+  const matrixSize=useAppSelector(store => store.pixelatorMode.matrixSize)
 
   const moveRight = useCallback(() => {
-    if (!selectedPixelCoords || !pixels) {
+    if (!selectedPixelCoords || !pixels || !matrixSize) {
       return
     }    
-    if (selectedPixelCoords.x + 1 < pixels.size.width) {
+    if (selectedPixelCoords.x + 1 < matrixSize.width) {
       onError(PIXEL_NAVIGATION_ERRORR.noError)
       const newCoords:IPoint = {
         x: selectedPixelCoords.x + 1,
@@ -29,10 +30,10 @@ export const usePixelNavigationActions = (
       onError(PIXEL_NAVIGATION_ERRORR.notPrev)
       
     }
-  },[dispatch,onError,pixels,selectedPixelCoords])
+  },[dispatch,onError,pixels,selectedPixelCoords, matrixSize])
 
   const moveLeft = useCallback(() => {
-    if (!selectedPixelCoords || !pixels) {
+    if (!selectedPixelCoords || !pixels || !matrixSize) {
       return
     }    
     if (selectedPixelCoords.x - 1 >= 0) {
@@ -46,10 +47,10 @@ export const usePixelNavigationActions = (
     } else {
       onError(PIXEL_NAVIGATION_ERRORR.notPrev)
     }
-  },[dispatch,onError,pixels,selectedPixelCoords])
+  },[dispatch,onError,pixels,selectedPixelCoords, matrixSize])
 
   const moveUp = useCallback(() => {
-    if (!selectedPixelCoords || !pixels) {
+    if (!selectedPixelCoords || !pixels || !matrixSize) {
       return
     }    
     if (selectedPixelCoords.y - 1 >= 0) {
@@ -64,13 +65,13 @@ export const usePixelNavigationActions = (
     } else {
       onError(PIXEL_NAVIGATION_ERRORR.notPrev)
     }
-  },[dispatch,onError,pixels,selectedPixelCoords])
+  },[dispatch,onError,pixels,selectedPixelCoords, matrixSize])
 
   const moveDown = useCallback(() => {
-    if (!selectedPixelCoords || !pixels) {
+    if (!selectedPixelCoords || !pixels || !matrixSize) {
       return
     }    
-    if (selectedPixelCoords.y + 1 < pixels.size.height) {
+    if (selectedPixelCoords.y + 1 < matrixSize.height) {
       onError(PIXEL_NAVIGATION_ERRORR.noError)
       const newCoords: IPoint = {
         x: selectedPixelCoords.x ,
@@ -81,7 +82,7 @@ export const usePixelNavigationActions = (
     } else {
       onError(PIXEL_NAVIGATION_ERRORR.notPrev)
     }
-  }, [dispatch, onError, pixels, selectedPixelCoords])
+  }, [dispatch, onError, pixels, selectedPixelCoords, matrixSize])
   
 
   return {

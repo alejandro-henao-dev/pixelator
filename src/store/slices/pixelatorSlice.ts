@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IPoint, pointToString } from '@/models/Point'
 import { IPixelMatrix } from '@/models/PixelMatrix'
+import { ISize } from '@/models/Size'
+import { getMatrixSize } from '@/models/Matrix'
 
 
 interface PixelatorState {
@@ -8,10 +10,10 @@ interface PixelatorState {
   config: {
     pixelSize: number,
   },
-  
   active:boolean,
   pixels?: IPixelMatrix,
-  donePixels:Record<string,IPoint>
+  matrixSize?:ISize,
+  donePixels:Record<string,IPoint>,
   generated: boolean,
   selectedCoords: IPoint | null,
   drawGridBorders:boolean
@@ -24,6 +26,7 @@ const initialState: PixelatorState = {
   },
   active:true,
   pixels: undefined,
+  matrixSize:undefined,
   generated: false,
   selectedCoords: null,
   drawGridBorders: false,
@@ -43,7 +46,8 @@ export const PixelatorSlice = createSlice({
 
     setPixels: (state, action: PayloadAction<IPixelMatrix>) => {
       state.pixels = action.payload
-      state.generated=true
+      state.generated = true
+      state.matrixSize=getMatrixSize(action.payload)
     },
 
     setSelectedPixel: (state, action: PayloadAction<IPoint | null>) => {
@@ -58,6 +62,19 @@ export const PixelatorSlice = createSlice({
       state.donePixels = {
         ...state.donePixels,
         [pointToString(action.payload)]:action.payload
+      }
+    },
+    toggleDonePixel: (state, action: PayloadAction<IPoint>) => {
+      const hash = pointToString(action.payload)
+      
+      if (state.donePixels[hash] !== undefined) {
+        const { [hash]: _, ...donePixelsWithoutPayload } = state.donePixels
+        state.donePixels=donePixelsWithoutPayload
+      } else {
+        state.donePixels = {
+          ...state.donePixels,
+          [pointToString(action.payload)]:action.payload
+        } 
       }
     }
   },

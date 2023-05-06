@@ -27,13 +27,9 @@ export const PixelatedImage: React.FC = () => {
     }
   },[selected])
 
-  useEffect(() => {
-    console.log(donePixels)
-  },[donePixels])
 
   const onPixelClick = (point: IPoint) => {
     dispatch(pixelatorStateActions.setSelectedPixel(point))
-    
   }
 
 
@@ -53,10 +49,6 @@ export const PixelatedImage: React.FC = () => {
         const active=props.pixel.coords
         ? !Boolean(donePixels[pointToString(props.pixel.coords)])
           : true
-        
-          // console.log("active", props.pixel.coords,pointToString(props.pixel.coords as IPoint),donePixels[pointToString(props.pixel.coords as IPoint)],donePixels)  
-      
-        
         return  <PixelDraw
         {...props}
         active={active}
