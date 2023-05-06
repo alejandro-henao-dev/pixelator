@@ -11,6 +11,8 @@ import { Button, BUTTON_TYPES } from "@/components/atoms/button";
 import { pixelateImage } from "@/tools/pixelator";
 
 import dynamic from 'next/dynamic'
+import { pointToString } from "@/models/Point";
+import { CheckCircleOutlined } from "@ant-design/icons";
 
 // const Pixelator = dynamic(() => {
 //   return import("../../../tools/pixelator").then((mod) => mod.Pixelator)
@@ -29,8 +31,11 @@ export const PixelatorConfigDropdown: React.FC<PixelatorConfigDropdownProps> = (
   const active = useAppSelector(state => state.pixelatorMode.active)
   const config = useAppSelector(state => state.pixelatorMode.config)
   const pixels = useAppSelector(state => state.pixelatorMode.pixels)
+  const matrixSize = useAppSelector(state => state.pixelatorMode.matrixSize)
+  const selectedCoords=useAppSelector(state=>state.pixelatorMode.selectedCoords)
   const imageURL = useAppSelector(state => state.image.url)
-  const drawGridBorders=useAppSelector(state => state.pixelatorMode.drawGridBorders)
+  const drawGridBorders = useAppSelector(state => state.pixelatorMode.drawGridBorders)
+  const donePixels=useAppSelector(state=>state.pixelatorMode.donePixels)
 
   const dispatch = useDispatch()
   
@@ -92,9 +97,31 @@ export const PixelatorConfigDropdown: React.FC<PixelatorConfigDropdownProps> = (
               relativeSize >Grid size: </Text>
 
               <Text as="span" size={TEXT_SIZE.small} className={styles.fieldValue}>
-                {/* {`W: ${pixels?.size.width} - H: ${pixels?.size.height}`} */}
+                {matrixSize && `W: ${matrixSize.width} / H: ${matrixSize.height}`}
               </Text>
             </li>
+
+            {selectedCoords && <>
+              <li className={styles.field}>
+                <Text as="label" weight={TEXT_WEIGHT.bold} size={TEXT_SIZE.small}
+                relativeSize >current: </Text>
+
+                <Text as="span" size={TEXT_SIZE.small} className={styles.fieldValue}>
+                  {`x:${selectedCoords.x} / y:${selectedCoords.y} `}
+                  {" "}
+                  <span
+                    className={classnames(
+                      styles.doneIcon,
+                      donePixels[pointToString(selectedCoords)] && styles.isDone
+                    )}
+                  >
+                    <CheckCircleOutlined />
+                  </span>
+                </Text>
+
+                
+              </li>            
+            </>}
           </ul>
 
         </section>

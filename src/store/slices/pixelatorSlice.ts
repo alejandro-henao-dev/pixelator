@@ -45,6 +45,8 @@ export const PixelatorSlice = createSlice({
     },
 
     setPixels: (state, action: PayloadAction<IPixelMatrix>) => {
+      state.donePixels = {}
+      state.selectedCoords=null
       state.pixels = action.payload
       state.generated = true
       state.matrixSize=getMatrixSize(action.payload)
